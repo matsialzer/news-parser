@@ -1,0 +1,15 @@
+2022-12-28 09:46:03,228 parsers      CRITICAL error in get last date and link
+2022-12-28 09:46:22,398 parsers      CRITICAL error in get last date and link
+2022-12-28 10:05:40,837 parsers      CRITICAL bbc last link not found : https://www.bbc.com/uzbek/uzbekistan-64095051, page link : https://www.bbc.com/uzbek/topics/c8y949r98pgt
+2022-12-28 10:06:55,793 parsers      CRITICAL bbc last link not found : https://www.bbc.com/uzbek/uzbekistan-64095051, page link : https://www.bbc.com/uzbek/topics/c8y949r98pgt
+2022-12-28 10:20:49,383 parsers      CRITICAL bbc last link not found : https://www.bbc.com/uzbek/uzbekistan-64095051, page link : https://www.bbc.com/uzbek/topics/c8y949r98pgt
+2022-12-28 10:24:30,826 parsers      CRITICAL bbc last link not found : https://www.bbc.com/uzbek/uzbekistan-63917707, page link : https://www.bbc.com/uzbek/topics/c8y949r98pgt
+2022-12-28 10:28:03,522 parsers      CRITICAL bbc last link not found : https://www.bbc.com/uzbek/uzbekistan-63906630, page link : https://www.bbc.com/uzbek/topics/c8y949r98pgt
+2022-12-28 10:29:25,875 parsers      CRITICAL bbc last link not found : https://www.bbc.com/uzbek/uzbekistan-63906630, page link : https://www.bbc.com/uzbek/topics/c8y949r98pgt
+2022-12-28 10:29:59,221 parsers      CRITICAL bbc last link not found : https://www.bbc.com/uzbek/uzbekistan-63906630, page link : https://www.bbc.com/uzbek/topics/c8y949r98pgt
+2022-12-28 10:30:57,111 parsers      CRITICAL bbc last link not found : https://www.bbc.com/uzbek/uzbekistan-63906630, page link : https://www.bbc.com/uzbek/topics/c8y949r98pgt
+2022-12-28 10:33:10,509 parsers      CRITICAL bbc last link not found : https://www.bbc.com/uzbek/uzbekistan-63906630, page link : https://www.bbc.com/uzbek/topics/c8y949r98pgt
+2022-12-28 10:33:48,287 parsers      CRITICAL bbc last link not found : https://www.bbc.com/uzbek/uzbekistan-63906630, page link : https://www.bbc.com/uzbek/topics/c8y949r98pgt
+2022-12-28 10:35:13,496 parsers      CRITICAL bbc last link not found : https://www.bbc.com/uzbek/uzbekistan-63906630, page link : https://www.bbc.com/uzbek/topics/c8y949r98pgt
+2022-12-28 10:36:39,356 parsers      CRITICAL bbc last link not found : https://www.bbc.com/uzbek/uzbekistan-63906630, page link : https://www.bbc.com/uzbek/topics/c8y949r98pgt
+2022-12-28 10:37:24,816 parsers      CRITICAL bbc last link not found : https://www.bbc.com/uzbek/uzbekistan-63906630, page link : https://www.bbc.com/uzbek/topics/c8y949r98pgt

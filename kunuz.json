@@ -1,0 +1,315 @@
+{
+    "_": "Message",
+    "id": 62272,
+    "sender_chat": {
+        "_": "Chat",
+        "id": -1001167945861,
+        "type": "ChatType.CHANNEL",
+        "is_verified": true,
+        "is_restricted": false,
+        "is_creator": false,
+        "is_scam": false,
+        "is_fake": false,
+        "title": "Kun.uz | Rasmiy kanal",
+        "username": "kunuz",
+        "photo": {
+            "_": "ChatPhoto",
+            "small_file_id": "AQADAgADYrYxG0tOSEkAEAIAA3t_veUW____6iEdy01ITrEABB4E",
+            "small_photo_unique_id": "AgADYrYxG0tOSEk",
+            "big_file_id": "AQADAgADYrYxG0tOSEkAEAMAA3t_veUW____6iEdy01ITrEABB4E",
+            "big_photo_unique_id": "AgADYrYxG0tOSEk"
+        },
+        "dc_id": 2,
+        "has_protected_content": false
+    },
+    "date": "2022-12-21 12:05:26",
+    "chat": {
+        "_": "Chat",
+        "id": -1001167945861,
+        "type": "ChatType.CHANNEL",
+        "is_verified": true,
+        "is_restricted": false,
+        "is_creator": false,
+        "is_scam": false,
+        "is_fake": false,
+        "title": "Kun.uz | Rasmiy kanal",
+        "username": "kunuz",
+        "photo": {
+            "_": "ChatPhoto",
+            "small_file_id": "AQADAgADYrYxG0tOSEkAEAIAA3t_veUW____6iEdy01ITrEABB4E",
+            "small_photo_unique_id": "AgADYrYxG0tOSEk",
+            "big_file_id": "AQADAgADYrYxG0tOSEkAEAMAA3t_veUW____6iEdy01ITrEABB4E",
+            "big_photo_unique_id": "AgADYrYxG0tOSEk"
+        },
+        "dc_id": 2,
+        "has_protected_content": false
+    },
+    "mentioned": false,
+    "scheduled": false,
+    "from_scheduled": false,
+    "media": "MessageMediaType.PHOTO",
+    "has_protected_content": false,
+    "caption_entities": [
+        {
+            "_": "MessageEntity",
+            "type": "MessageEntityType.BOLD",
+            "offset": 0,
+            "length": 17
+        },
+        {
+            "_": "MessageEntity",
+            "type": "MessageEntityType.TEXT_LINK",
+            "offset": 20,
+            "length": 84,
+            "url": "https://kun.uz/uz/25373183"
+        },
+        {
+            "_": "MessageEntity",
+            "type": "MessageEntityType.TEXT_LINK",
+            "offset": 107,
+            "length": 75,
+            "url": "https://kun.uz/uz/news/2022/12/21/rossiya-ukrainaga-qarshi-yangi-hujum-masalasida-bir-qarorga-kelmadi-nyt"
+        },
+        {
+            "_": "MessageEntity",
+            "type": "MessageEntityType.TEXT_LINK",
+            "offset": 185,
+            "length": 66,
+            "url": "https://kun.uz/uz/news/2022/12/21/aqshda-qora-tanli-ayolni-oldirgan-politsiyachi-11-yilga-qamaldi"
+        },
+        {
+            "_": "MessageEntity",
+            "type": "MessageEntityType.TEXT_LINK",
+            "offset": 254,
+            "length": 83,
+            "url": "https://kun.uz/uz/news/2022/12/21/shtaynmayyer-jinpingdan-urushni-tugatish-uchun-putinga-tasir-otkazishni-soradi"
+        },
+        {
+            "_": "MessageEntity",
+            "type": "MessageEntityType.TEXT_LINK",
+            "offset": 340,
+            "length": 66,
+            "url": "https://kun.uz/uz/news/2022/12/21/mask-twitterda-otkazilgan-sorov-natijasini-shubha-ostiga-oldi"
+        },
+        {
+            "_": "MessageEntity",
+            "type": "MessageEntityType.TEXT_LINK",
+            "offset": 406,
+            "length": 20,
+            "url": "https://t.me/kunuz"
+        }
+    ],
+    "photo": {
+        "_": "Photo",
+        "file_id": "AgACAgIAAx0CRZ1whQAC80BjorAnnMX__t2IYk7vpqgbPNC_jwACksQxGx2eGUmyOMRh1Jn5gAAIAQADAgADeAAHHgQ",
+        "file_unique_id": "AgADksQxGx2eGUk",
+        "width": 630,
+        "height": 420,
+        "file_size": 16449,
+        "date": "2022-12-21 11:32:30"
+    },
+    "caption": "Jahon xabarlari\n\n🔹 Kongress qo‘mitasi Trampning soliq deklaratsiyalari e’lon qilinishiga ruxsat berdi\n\n🔹 Rossiya Ukrainaga qarshi yangi hujum masalasida bir qarorga kelmadi - NYT\n\n🔹 AQShda qora tanli ayolni o‘ldirgan politsiyachi 11 yilga qamaldi\n\n🔹 Shtaynmayyer Jinpingdan urushni tugatish uchun Putinga ta’sir o‘tkazishni so‘radi\n\n🔹 Mask Twitter'da o‘tkazilgan so‘rov natijasini shubha ostiga oldi\n\nKun.uz rasmiy kanali",
+    "views": 1,
+    "forwards": 0,
+    "outgoing": false
+}{
+    "_": "Message",
+    "id": 62273,
+    "sender_chat": {
+        "_": "Chat",
+        "id": -1001167945861,
+        "type": "ChatType.CHANNEL",
+        "is_verified": true,
+        "is_restricted": false,
+        "is_creator": false,
+        "is_scam": false,
+        "is_fake": false,
+        "title": "Kun.uz | Rasmiy kanal",
+        "username": "kunuz",
+        "photo": {
+            "_": "ChatPhoto",
+            "small_file_id": "AQADAgADYrYxG0tOSEkAEAIAA3t_veUW____6iEdy01ITrEABB4E",
+            "small_photo_unique_id": "AgADYrYxG0tOSEk",
+            "big_file_id": "AQADAgADYrYxG0tOSEkAEAMAA3t_veUW____6iEdy01ITrEABB4E",
+            "big_photo_unique_id": "AgADYrYxG0tOSEk"
+        },
+        "dc_id": 2,
+        "has_protected_content": false
+    },
+    "date": "2022-12-21 12:45:15",
+    "chat": {
+        "_": "Chat",
+        "id": -1001167945861,
+        "type": "ChatType.CHANNEL",
+        "is_verified": true,
+        "is_restricted": false,
+        "is_creator": false,
+        "is_scam": false,
+        "is_fake": false,
+        "title": "Kun.uz | Rasmiy kanal",
+        "username": "kunuz",
+        "photo": {
+            "_": "ChatPhoto",
+            "small_file_id": "AQADAgADYrYxG0tOSEkAEAIAA3t_veUW____6iEdy01ITrEABB4E",
+            "small_photo_unique_id": "AgADYrYxG0tOSEk",
+            "big_file_id": "AQADAgADYrYxG0tOSEkAEAMAA3t_veUW____6iEdy01ITrEABB4E",
+            "big_photo_unique_id": "AgADYrYxG0tOSEk"
+        },
+        "dc_id": 2,
+        "has_protected_content": false
+    },
+    "mentioned": false,
+    "scheduled": false,
+    "from_scheduled": false,
+    "media": "MessageMediaType.VIDEO",
+    "has_protected_content": false,
+    "caption_entities": [
+        {
+            "_": "MessageEntity",
+            "type": "MessageEntityType.BOLD",
+            "offset": 0,
+            "length": 69
+        },
+        {
+            "_": "MessageEntity",
+            "type": "MessageEntityType.URL",
+            "offset": 239,
+            "length": 26
+        },
+        {
+            "_": "MessageEntity",
+            "type": "MessageEntityType.TEXT_LINK",
+            "offset": 267,
+            "length": 20,
+            "url": "https://t.me/kunuz"
+        }
+    ],
+    "video": {
+        "_": "Video",
+        "file_id": "BAACAgIAAx0CRZ1whQAC80FjormLMsGWXbig9R49K0068FvcSQACCCQAAjAFGEmr6q8OOnBLfR4E",
+        "file_unique_id": "AgADCCQAAjAFGEk",
+        "width": 854,
+        "height": 480,
+        "duration": 319,
+        "file_name": "995-VIDEO PROSMOTR (15).mp4",
+        "mime_type": "video/mp4",
+        "file_size": 39136365,
+        "supports_streaming": true,
+        "date": "2022-12-21 12:45:15",
+        "thumbs": [
+            {
+                "_": "Thumbnail",
+                "file_id": "AAMCAgADHQJFnXCFAALzQWOiuYsywZZduKD1Hj0rTTrwW9xJAAIIJAACMAUYSavqrw46cEt9AAgBAAdtAAceBA",
+                "file_unique_id": "AgADCCQAAjAFGEk",
+                "width": 320,
+                "height": 180,
+                "file_size": 17490
+            }
+        ]
+    },
+    "caption": "Toshkentda 2 oy ichida 475 km avtobus yo‘lakchalari tashkil etiladi\n\nYo‘laklarda avtobusdan tashqari faqat tez yordam, yong‘in xavfsizligi va IIV avtomobillari harakatlanishi mumkin. Boshqalarning bu yerdan harakatlanishi taqiqlanadi.\n\n👉 https://kun.uz/uz/17531337\n\nKun.uz rasmiy kanali",
+    "views": 1,
+    "forwards": 0,
+    "outgoing": false
+}{
+    "_": "Message",
+    "id": 62274,
+    "sender_chat": {
+        "_": "Chat",
+        "id": -1001167945861,
+        "type": "ChatType.CHANNEL",
+        "is_verified": true,
+        "is_restricted": false,
+        "is_creator": false,
+        "is_scam": false,
+        "is_fake": false,
+        "title": "Kun.uz | Rasmiy kanal",
+        "username": "kunuz",
+        "photo": {
+            "_": "ChatPhoto",
+            "small_file_id": "AQADAgADYrYxG0tOSEkAEAIAA3t_veUW____6iEdy01ITrEABB4E",
+            "small_photo_unique_id": "AgADYrYxG0tOSEk",
+            "big_file_id": "AQADAgADYrYxG0tOSEkAEAMAA3t_veUW____6iEdy01ITrEABB4E",
+            "big_photo_unique_id": "AgADYrYxG0tOSEk"
+        },
+        "dc_id": 2,
+        "has_protected_content": false
+    },
+    "date": "2022-12-21 13:09:59",
+    "chat": {
+        "_": "Chat",
+        "id": -1001167945861,
+        "type": "ChatType.CHANNEL",
+        "is_verified": true,
+        "is_restricted": false,
+        "is_creator": false,
+        "is_scam": false,
+        "is_fake": false,
+        "title": "Kun.uz | Rasmiy kanal",
+        "username": "kunuz",
+        "photo": {
+            "_": "ChatPhoto",
+            "small_file_id": "AQADAgADYrYxG0tOSEkAEAIAA3t_veUW____6iEdy01ITrEABB4E",
+            "small_photo_unique_id": "AgADYrYxG0tOSEk",
+            "big_file_id": "AQADAgADYrYxG0tOSEkAEAMAA3t_veUW____6iEdy01ITrEABB4E",
+            "big_photo_unique_id": "AgADYrYxG0tOSEk"
+        },
+        "dc_id": 2,
+        "has_protected_content": false
+    },
+    "mentioned": false,
+    "scheduled": false,
+    "from_scheduled": false,
+    "media": "MessageMediaType.PHOTO",
+    "has_protected_content": false,
+    "caption_entities": [
+        {
+            "_": "MessageEntity",
+            "type": "MessageEntityType.BOLD",
+            "offset": 0,
+            "length": 134
+        },
+        {
+            "_": "MessageEntity",
+            "type": "MessageEntityType.URL",
+            "offset": 328,
+            "length": 6
+        },
+        {
+            "_": "MessageEntity",
+            "type": "MessageEntityType.URL",
+            "offset": 390,
+            "length": 26
+        },
+        {
+            "_": "MessageEntity",
+            "type": "MessageEntityType.TEXT_LINK",
+            "offset": 418,
+            "length": 20,
+            "url": "https://t.me/kunuz"
+        }
+    ],
+    "photo": {
+        "_": "Photo",
+        "file_id": "AgACAgIAAx0CRZ1whQAC80Jjor8p2MvJqQgpbPHdRGLzhTAsZwACS8IxG0xKGEmBvqTeia6YogAIAQADAgADeAAHHgQ",
+        "file_unique_id": "AgADS8IxG0xKGEk",
+        "width": 800,
+        "height": 514,
+        "file_size": 40102,
+        "date": "2022-12-21 12:58:32",
+        "thumbs": [
+            {
+                "_": "Thumbnail",
+                "file_id": "AgACAgIAAx0CRZ1whQAC80Jjor8p2MvJqQgpbPHdRGLzhTAsZwACS8IxG0xKGEmBvqTeia6YogAIAQADAgADbQAHHgQ",
+                "file_unique_id": "AgADS8IxG0xKGEk",
+                "width": 320,
+                "height": 206,
+                "file_size": 11526
+            }
+        ]
+    },
+    "caption": "Benzin narxi 4300 so‘mga tushishi va yengil mashinalardan gaz yechilishi haqida xabarlar tarqaldi, Energetika vazirligi izoh berdi  \n\nIjtimoiy tarmoqlarda Transport vositalariga o‘rnatilgan suyultirilgan gaz ballonlari yechib olinishi, hamma avtomobillar benzinga o‘tkazilishi haqida xabarlar tarqaldi. Energetika vazirligining Kun.uz’ga ma’lum qilishicha, har ikki xabar ham yolg‘on. \n\n👉 https://kun.uz/uz/54256168\n\nKun.uz rasmiy kanali",
+    "views": 1,
+    "forwards": 0,
+    "outgoing": false
+}

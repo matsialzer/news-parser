@@ -1,0 +1,473 @@
+{
+    "_": "Message",
+    "id": 84633,
+    "sender_chat": {
+        "_": "Chat",
+        "id": -1001071872155,
+        "type": "ChatType.CHANNEL",
+        "is_verified": true,
+        "is_restricted": false,
+        "is_creator": false,
+        "is_scam": false,
+        "is_fake": false,
+        "title": "Daryo | Rasmiy kanal",
+        "username": "Daryo",
+        "photo": {
+            "_": "ChatPhoto",
+            "small_file_id": "AQADAgADerYxGwvB8UoAEAIAA2V3d-sW____mJzpJXz8z8EABB4E",
+            "small_photo_unique_id": "AgADerYxGwvB8Uo",
+            "big_file_id": "AQADAgADerYxGwvB8UoAEAMAA2V3d-sW____mJzpJXz8z8EABB4E",
+            "big_photo_unique_id": "AgADerYxGwvB8Uo"
+        },
+        "dc_id": 2,
+        "has_protected_content": false
+    },
+    "date": "2022-12-21 12:01:02",
+    "chat": {
+        "_": "Chat",
+        "id": -1001071872155,
+        "type": "ChatType.CHANNEL",
+        "is_verified": true,
+        "is_restricted": false,
+        "is_creator": false,
+        "is_scam": false,
+        "is_fake": false,
+        "title": "Daryo | Rasmiy kanal",
+        "username": "Daryo",
+        "photo": {
+            "_": "ChatPhoto",
+            "small_file_id": "AQADAgADerYxGwvB8UoAEAIAA2V3d-sW____mJzpJXz8z8EABB4E",
+            "small_photo_unique_id": "AgADerYxGwvB8Uo",
+            "big_file_id": "AQADAgADerYxGwvB8UoAEAMAA2V3d-sW____mJzpJXz8z8EABB4E",
+            "big_photo_unique_id": "AgADerYxGwvB8Uo"
+        },
+        "dc_id": 2,
+        "has_protected_content": false
+    },
+    "forward_from_chat": {
+        "_": "Chat",
+        "id": -1001300540244,
+        "type": "ChatType.CHANNEL",
+        "is_verified": false,
+        "is_restricted": false,
+        "is_creator": false,
+        "is_scam": false,
+        "is_fake": false,
+        "title": ".",
+        "has_protected_content": false
+    },
+    "forward_from_message_id": 3807,
+    "forward_date": "2022-12-13 16:50:57",
+    "mentioned": false,
+    "scheduled": false,
+    "from_scheduled": false,
+    "media": "MessageMediaType.VIDEO",
+    "has_protected_content": false,
+    "caption_entities": [
+        {
+            "_": "MessageEntity",
+            "type": "MessageEntityType.URL",
+            "offset": 462,
+            "length": 24
+        }
+    ],
+    "video": {
+        "_": "Video",
+        "file_id": "BAACAgIAAx0CP-N4mwABAUqZY6KvJ9iMQNsi_IHQYB7Vc9oaqskAAgg0AAJSXMlIBQY-vBt14gYeBA",
+        "file_unique_id": "AgADCDQAAlJcyUg",
+        "width": 1280,
+        "height": 720,
+        "duration": 15,
+        "file_name": "IMG_3140.MP4",
+        "mime_type": "video/mp4",
+        "file_size": 4456225,
+        "supports_streaming": true,
+        "date": "2022-12-13 16:50:57",
+        "thumbs": [
+            {
+                "_": "Thumbnail",
+                "file_id": "AAMCAgADHQI_43ibAAEBSpljoq8n2IxA2yL8gdBgHtVz2hqqyQACCDQAAlJcyUgFBj68G3XiBgAIAQAHbQAHHgQ",
+                "file_unique_id": "AgADCDQAAlJcyUg",
+                "width": 320,
+                "height": 180,
+                "file_size": 16549
+            }
+        ]
+    },
+    "caption": "Chortoq Mineral Water компанияси Ўзбекистон бозорида янги маҳсулот бўлмиш паст ишқорли артезиан суви – Chortoq SUV ичимлик сувини чиқарди\n\nChortoq SUV — ер остидан 160 метр чуқурликдан қазиб олинади. Сув фойдали элементлар билан тўйинган, аммо минерализациянинг паст даражаси туфайли у барча оила аъзолари, ҳатто  кичик ёшдаги болажонлар томонидан кундалик фойдаланишга тўғри келади.\n\nАртезиан суви Chortoq SUV — Ўзликни сақлаб қолиш санъати!\n\nҚўшимча маълумот \nhttps://suv.chortoq.com/\n\nРеклама",
+    "views": 1,
+    "forwards": 0,
+    "outgoing": false
+}{
+    "_": "Message",
+    "id": 84634,
+    "sender_chat": {
+        "_": "Chat",
+        "id": -1001071872155,
+        "type": "ChatType.CHANNEL",
+        "is_verified": true,
+        "is_restricted": false,
+        "is_creator": false,
+        "is_scam": false,
+        "is_fake": false,
+        "title": "Daryo | Rasmiy kanal",
+        "username": "Daryo",
+        "photo": {
+            "_": "ChatPhoto",
+            "small_file_id": "AQADAgADerYxGwvB8UoAEAIAA2V3d-sW____mJzpJXz8z8EABB4E",
+            "small_photo_unique_id": "AgADerYxGwvB8Uo",
+            "big_file_id": "AQADAgADerYxGwvB8UoAEAMAA2V3d-sW____mJzpJXz8z8EABB4E",
+            "big_photo_unique_id": "AgADerYxGwvB8Uo"
+        },
+        "dc_id": 2,
+        "has_protected_content": false
+    },
+    "date": "2022-12-21 12:12:06",
+    "chat": {
+        "_": "Chat",
+        "id": -1001071872155,
+        "type": "ChatType.CHANNEL",
+        "is_verified": true,
+        "is_restricted": false,
+        "is_creator": false,
+        "is_scam": false,
+        "is_fake": false,
+        "title": "Daryo | Rasmiy kanal",
+        "username": "Daryo",
+        "photo": {
+            "_": "ChatPhoto",
+            "small_file_id": "AQADAgADerYxGwvB8UoAEAIAA2V3d-sW____mJzpJXz8z8EABB4E",
+            "small_photo_unique_id": "AgADerYxGwvB8Uo",
+            "big_file_id": "AQADAgADerYxGwvB8UoAEAMAA2V3d-sW____mJzpJXz8z8EABB4E",
+            "big_photo_unique_id": "AgADerYxGwvB8Uo"
+        },
+        "dc_id": 2,
+        "has_protected_content": false
+    },
+    "mentioned": false,
+    "scheduled": false,
+    "from_scheduled": false,
+    "media": "MessageMediaType.PHOTO",
+    "has_protected_content": false,
+    "caption_entities": [
+        {
+            "_": "MessageEntity",
+            "type": "MessageEntityType.BOLD",
+            "offset": 0,
+            "length": 92
+        },
+        {
+            "_": "MessageEntity",
+            "type": "MessageEntityType.URL",
+            "offset": 269,
+            "length": 18
+        },
+        {
+            "_": "MessageEntity",
+            "type": "MessageEntityType.BOLD",
+            "offset": 289,
+            "length": 19
+        },
+        {
+            "_": "MessageEntity",
+            "type": "MessageEntityType.MENTION",
+            "offset": 312,
+            "length": 6
+        }
+    ],
+    "photo": {
+        "_": "Photo",
+        "file_id": "AgACAgIAAx0CP-N4mwABAUqaY6KxsrcY7l2oPlYoP74lqXQzS-oAAsDFMRt0XxhJEggz0T1D30gACAEAAwIAA3gABx4E",
+        "file_unique_id": "AgADwMUxG3RfGEk",
+        "width": 680,
+        "height": 436,
+        "file_size": 40986,
+        "date": "2022-12-21 11:45:47"
+    },
+    "caption": "Ilon Mask o‘ziga yetarlicha “kaltafahm” davomchi topishi bilan Twitter rahbarligidan ketadi \n\n“Shundan keyin ishlab chiquvchilar va serverlarga xizmat ko‘rsatish bo‘yicha mutaxassis jamoasiga rahbarlik qilaman, xolos”, — deb yozdi Ilon Mask o‘z sahifasida.\n\nBatafsil — http://dy.uz/mVAuw\n\nSo‘nggi yangiliklar 👉 @Daryo",
+    "views": 1,
+    "forwards": 0,
+    "outgoing": false
+}{
+    "_": "Message",
+    "id": 84635,
+    "sender_chat": {
+        "_": "Chat",
+        "id": -1001071872155,
+        "type": "ChatType.CHANNEL",
+        "is_verified": true,
+        "is_restricted": false,
+        "is_creator": false,
+        "is_scam": false,
+        "is_fake": false,
+        "title": "Daryo | Rasmiy kanal",
+        "username": "Daryo",
+        "photo": {
+            "_": "ChatPhoto",
+            "small_file_id": "AQADAgADerYxGwvB8UoAEAIAA2V3d-sW____mJzpJXz8z8EABB4E",
+            "small_photo_unique_id": "AgADerYxGwvB8Uo",
+            "big_file_id": "AQADAgADerYxGwvB8UoAEAMAA2V3d-sW____mJzpJXz8z8EABB4E",
+            "big_photo_unique_id": "AgADerYxGwvB8Uo"
+        },
+        "dc_id": 2,
+        "has_protected_content": false
+    },
+    "date": "2022-12-21 12:43:17",
+    "chat": {
+        "_": "Chat",
+        "id": -1001071872155,
+        "type": "ChatType.CHANNEL",
+        "is_verified": true,
+        "is_restricted": false,
+        "is_creator": false,
+        "is_scam": false,
+        "is_fake": false,
+        "title": "Daryo | Rasmiy kanal",
+        "username": "Daryo",
+        "photo": {
+            "_": "ChatPhoto",
+            "small_file_id": "AQADAgADerYxGwvB8UoAEAIAA2V3d-sW____mJzpJXz8z8EABB4E",
+            "small_photo_unique_id": "AgADerYxGwvB8Uo",
+            "big_file_id": "AQADAgADerYxGwvB8UoAEAMAA2V3d-sW____mJzpJXz8z8EABB4E",
+            "big_photo_unique_id": "AgADerYxGwvB8Uo"
+        },
+        "dc_id": 2,
+        "has_protected_content": false
+    },
+    "mentioned": false,
+    "scheduled": false,
+    "from_scheduled": false,
+    "media": "MessageMediaType.PHOTO",
+    "has_protected_content": false,
+    "caption_entities": [
+        {
+            "_": "MessageEntity",
+            "type": "MessageEntityType.BOLD",
+            "offset": 0,
+            "length": 80
+        },
+        {
+            "_": "MessageEntity",
+            "type": "MessageEntityType.URL",
+            "offset": 184,
+            "length": 18
+        },
+        {
+            "_": "MessageEntity",
+            "type": "MessageEntityType.BOLD",
+            "offset": 204,
+            "length": 19
+        },
+        {
+            "_": "MessageEntity",
+            "type": "MessageEntityType.MENTION",
+            "offset": 227,
+            "length": 6
+        }
+    ],
+    "photo": {
+        "_": "Photo",
+        "file_id": "AgACAgIAAx0CP-N4mwABAUqbY6K5FZrXdk_AeefTboSDTmwW6ogAAmnBMRu3mxFJmsG_vPlIl9kACAEAAwIAA3kABx4E",
+        "file_unique_id": "AgADacExG7ebEUk",
+        "width": 1200,
+        "height": 780,
+        "file_size": 155843,
+        "date": "2022-12-21 11:58:02",
+        "thumbs": [
+            {
+                "_": "Thumbnail",
+                "file_id": "AgACAgIAAx0CP-N4mwABAUqbY6K5FZrXdk_AeefTboSDTmwW6ogAAmnBMRu3mxFJmsG_vPlIl9kACAEAAwIAA20ABx4E",
+                "file_unique_id": "AgADacExG7ebEUk",
+                "width": 320,
+                "height": 208,
+                "file_size": 24269
+            }
+        ]
+    },
+    "caption": "Toshkentdagi savdo majmuasida IIO xodimi voyaga yetmagan bolaga qo‘pollik qildi \n\nHolat yuzasidan ichki ishlar organlari xodimlariga nisbatan xizmat tekshiruvi tayinlandi.\n\nBatafsil — http://dy.uz/QMvvm\n\nSo‘nggi yangiliklar 👉 @Daryo",
+    "views": 1,
+    "forwards": 0,
+    "outgoing": false
+}{
+    "_": "Message",
+    "id": 84636,
+    "sender_chat": {
+        "_": "Chat",
+        "id": -1001071872155,
+        "type": "ChatType.CHANNEL",
+        "is_verified": true,
+        "is_restricted": false,
+        "is_creator": false,
+        "is_scam": false,
+        "is_fake": false,
+        "title": "Daryo | Rasmiy kanal",
+        "username": "Daryo",
+        "photo": {
+            "_": "ChatPhoto",
+            "small_file_id": "AQADAgADerYxGwvB8UoAEAIAA2V3d-sW____mJzpJXz8z8EABB4E",
+            "small_photo_unique_id": "AgADerYxGwvB8Uo",
+            "big_file_id": "AQADAgADerYxGwvB8UoAEAMAA2V3d-sW____mJzpJXz8z8EABB4E",
+            "big_photo_unique_id": "AgADerYxGwvB8Uo"
+        },
+        "dc_id": 2,
+        "has_protected_content": false
+    },
+    "date": "2022-12-21 12:45:35",
+    "chat": {
+        "_": "Chat",
+        "id": -1001071872155,
+        "type": "ChatType.CHANNEL",
+        "is_verified": true,
+        "is_restricted": false,
+        "is_creator": false,
+        "is_scam": false,
+        "is_fake": false,
+        "title": "Daryo | Rasmiy kanal",
+        "username": "Daryo",
+        "photo": {
+            "_": "ChatPhoto",
+            "small_file_id": "AQADAgADerYxGwvB8UoAEAIAA2V3d-sW____mJzpJXz8z8EABB4E",
+            "small_photo_unique_id": "AgADerYxGwvB8Uo",
+            "big_file_id": "AQADAgADerYxGwvB8UoAEAMAA2V3d-sW____mJzpJXz8z8EABB4E",
+            "big_photo_unique_id": "AgADerYxGwvB8Uo"
+        },
+        "dc_id": 2,
+        "has_protected_content": false
+    },
+    "mentioned": false,
+    "scheduled": false,
+    "from_scheduled": false,
+    "media": "MessageMediaType.PHOTO",
+    "has_protected_content": false,
+    "caption_entities": [
+        {
+            "_": "MessageEntity",
+            "type": "MessageEntityType.URL",
+            "offset": 119,
+            "length": 18
+        }
+    ],
+    "photo": {
+        "_": "Photo",
+        "file_id": "AgACAgIAAx0CP-N4mwABAUqcY6K5ht5M_Xlr05rssMltqTggTioAAubCMRvGiBFJjIVR5q59tQEACAEAAwIAA3kABx4E",
+        "file_unique_id": "AgAD5sIxG8aIEUk",
+        "width": 1280,
+        "height": 854,
+        "file_size": 125388,
+        "date": "2022-12-21 12:20:02",
+        "thumbs": [
+            {
+                "_": "Thumbnail",
+                "file_id": "AgACAgIAAx0CP-N4mwABAUqcY6K5ht5M_Xlr05rssMltqTggTioAAubCMRvGiBFJjIVR5q59tQEACAEAAwIAA20ABx4E",
+                "file_unique_id": "AgAD5sIxG8aIEUk",
+                "width": 320,
+                "height": 214,
+                "file_size": 16371
+            }
+        ]
+    },
+    "caption": "Avtoklavli betonini ishlab chiqarish bo‘yicha YTONG yetakchi xalqaro brendi O‘zbekiston bozoriga chiqmoqda\n\nBatafsil — http://dy.uz/1NMaP\n\nReklama",
+    "views": 1,
+    "forwards": 0,
+    "outgoing": false
+}{
+    "_": "Message",
+    "id": 84637,
+    "sender_chat": {
+        "_": "Chat",
+        "id": -1001071872155,
+        "type": "ChatType.CHANNEL",
+        "is_verified": true,
+        "is_restricted": false,
+        "is_creator": false,
+        "is_scam": false,
+        "is_fake": false,
+        "title": "Daryo | Rasmiy kanal",
+        "username": "Daryo",
+        "photo": {
+            "_": "ChatPhoto",
+            "small_file_id": "AQADAgADerYxGwvB8UoAEAIAA2V3d-sW____mJzpJXz8z8EABB4E",
+            "small_photo_unique_id": "AgADerYxGwvB8Uo",
+            "big_file_id": "AQADAgADerYxGwvB8UoAEAMAA2V3d-sW____mJzpJXz8z8EABB4E",
+            "big_photo_unique_id": "AgADerYxGwvB8Uo"
+        },
+        "dc_id": 2,
+        "has_protected_content": false
+    },
+    "date": "2022-12-21 12:57:06",
+    "chat": {
+        "_": "Chat",
+        "id": -1001071872155,
+        "type": "ChatType.CHANNEL",
+        "is_verified": true,
+        "is_restricted": false,
+        "is_creator": false,
+        "is_scam": false,
+        "is_fake": false,
+        "title": "Daryo | Rasmiy kanal",
+        "username": "Daryo",
+        "photo": {
+            "_": "ChatPhoto",
+            "small_file_id": "AQADAgADerYxGwvB8UoAEAIAA2V3d-sW____mJzpJXz8z8EABB4E",
+            "small_photo_unique_id": "AgADerYxGwvB8Uo",
+            "big_file_id": "AQADAgADerYxGwvB8UoAEAMAA2V3d-sW____mJzpJXz8z8EABB4E",
+            "big_photo_unique_id": "AgADerYxGwvB8Uo"
+        },
+        "dc_id": 2,
+        "has_protected_content": false
+    },
+    "mentioned": false,
+    "scheduled": false,
+    "from_scheduled": false,
+    "media": "MessageMediaType.PHOTO",
+    "has_protected_content": false,
+    "caption_entities": [
+        {
+            "_": "MessageEntity",
+            "type": "MessageEntityType.BOLD",
+            "offset": 0,
+            "length": 117
+        },
+        {
+            "_": "MessageEntity",
+            "type": "MessageEntityType.URL",
+            "offset": 318,
+            "length": 18
+        },
+        {
+            "_": "MessageEntity",
+            "type": "MessageEntityType.BOLD",
+            "offset": 338,
+            "length": 19
+        },
+        {
+            "_": "MessageEntity",
+            "type": "MessageEntityType.MENTION",
+            "offset": 361,
+            "length": 6
+        }
+    ],
+    "photo": {
+        "_": "Photo",
+        "file_id": "AgACAgIAAx0CP-N4mwABAUqdY6K8NQpiT-ZYgtzii5YF49TSxHYAAuzFMRt0XxhJDaEslhiPPlwACAEAAwIAA3kABx4E",
+        "file_unique_id": "AgAD7MUxG3RfGEk",
+        "width": 1280,
+        "height": 853,
+        "file_size": 67271,
+        "date": "2022-12-21 12:49:57",
+        "thumbs": [
+            {
+                "_": "Thumbnail",
+                "file_id": "AgACAgIAAx0CP-N4mwABAUqdY6K8NQpiT-ZYgtzii5YF49TSxHYAAuzFMRt0XxhJDaEslhiPPlwACAEAAwIAA20ABx4E",
+                "file_unique_id": "AgAD7MUxG3RfGEk",
+                "width": 320,
+                "height": 213,
+                "file_size": 13075
+            }
+        ]
+    },
+    "caption": "“Quyi tizim rahbarlarining e’tiborsizligi davlat rahbarining haqli e’tirozlariga sabab bo‘ldi” — Koson tumani hokimi \n\nShavkat Mirziyoyev raisligidagi videoselektorda Koson tumanidagi 1,2 ming gektar yerda ekin ekilmagani, tumanda 75 foiz korxonalarda 1 ta ish o‘rni ko‘rsatilgani tanqid ostiga olingandi.\n\nBatafsil — http://dy.uz/YjByg\n\nSo‘nggi yangiliklar 👉 @Daryo",
+    "views": 1,
+    "forwards": 0,
+    "outgoing": false
+}
