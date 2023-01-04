@@ -401,7 +401,7 @@ def stadion_parser(beat: bool=False, link: str=None) -> None:
         new_links = stadionuz.collect_new_links(last_date)
         print(f'new links : {len(new_links)}')
         print(f'new links : {new_links}')
-        
+
         # for link in new_links:
         #     stadion_parser.apply(
         #         kwargs={

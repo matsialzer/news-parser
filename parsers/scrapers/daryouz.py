@@ -73,9 +73,9 @@ def get_post_detail(link: str) -> dict:
                     post_info['main_image'] = img_url
                     continue
                 images.append(img_url)
-            if not summary:
-                summary = p.text
-                continue
+            # if not summary:
+            #     summary = p.text
+            #     continue
             text += p.text + '\n'
     post_info['summary'] = summary
     post_info['text'] = text
