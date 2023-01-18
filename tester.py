@@ -73,11 +73,13 @@ def write_new_date(site, datetuple, link=None):
 # link = 'https://bugun.uz/2022/12/28/samarqandda-500-ga-yaqin-oquvchisi-otmga-kirgan-oqituvchi-xtv-ustamasi-imtihonida-100-foizlik-natija-qayd-etdi/'
 # link = 'https://www.bbc.com/uzbek/world-60872788'
 # link = 'https://www.bbc.com/uzbek/world-60899262'
-link = 'https://kun.uz/news/2022/12/26/bolalar-ombudsmani-samarqanddagi-dok-1maks-preparati-bilan-bogliq-holatni-organdi'
-link = 'https://kun.uz/news/2022/12/27/18-bolani-oldirgan-beparvolik-davlat-retsepsiz-dori-savdosini-darhol-toxtatishi-kerak'
-kun_parser.apply_async(args=(False, link))
+# link = 'https://kun.uz/news/2022/12/26/bolalar-ombudsmani-samarqanddagi-dok-1maks-preparati-bilan-bogliq-holatni-organdi'
+# link = 'https://kun.uz/news/2022/12/27/18-bolani-oldirgan-beparvolik-davlat-retsepsiz-dori-savdosini-darhol-toxtatishi-kerak'
+link = 'https://daryo.uz/2023/01/18/andijonda-kop-qavatli-uyda-yongin-chiqdi'
+daryo_parser.apply_async(args=(False, link))
 
 
+# kun_parser.apply_async(args=(False, link))
 # from bs4 import BeautifulSoup
 
 # req = requests.get(link)

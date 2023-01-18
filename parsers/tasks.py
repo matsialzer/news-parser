@@ -1,5 +1,3 @@
-import json
-from typing import List
 from parsers.scrapers import (
     daryouz, aniquz, bugunuz, championatasia, gazetauz, 
     goal24uz, kunuz, olamsport, qalampiruz, sportsuz, 
@@ -10,17 +8,20 @@ from django.conf import settings
 from datetime import datetime, date
 from core.celery import app
 from random import choice
+from typing import List
 import requests
 import logging
+import json
 import time
 import os
 
 logger = logging.getLogger('parsers')
+logger.setLevel('INFO')
+API_ENDPOINT = settings.API_ENDPOINT
+API_KEY = settings.API_KEY
 
-API_URL = "http://api.news.e-konkurs.uz/api/v1/news"
-API_URL = 'http://api.news.e-konkurs.uz/api/v1/home/news'
 headers_api = {
-    'api-key': 'VGhpcyBBcGktVG9rZW4gaGFzIGJlZW4gY3JlYXRlZCBieSBVbWlkIEt1cmJhbm92IGluIDI4LjEyLjIwMjI='
+    'api-key': API_KEY
 }
 
 seconds = [0.5, 0.6, 0.7, 0.8, 0.9, 1]
@@ -59,9 +60,10 @@ def get_last_link(site: NewsLinks.Sites.choices) -> NewsLinks:
         ).order_by('-created_at')
     if daryo_news.exists():
         return daryo_news.first()
+    return False
 
 
-def send_post_info(post_info: dict) -> bool:
+def send_post_info(post_info: dict, site: NewsLinks.Sites=None, failed: bool=False) -> bool:
     try:
         image = None
         if post_info.get('main_image'):
@@ -78,15 +80,34 @@ def send_post_info(post_info: dict) -> bool:
         }
         for ind, tag in enumerate(post_info.get('tags', [])):
             payload[f'tags[{ind}]'] = tag['name']
+        post = None
+        if site:
+            if failed:
+                post = NewsLinks(
+                    site=site,
+                    url=post_info['link'],
+                    err_msg=post_info['errors']
+                )
+                post.save()
+                return
+            post = NewsLinks(
+                site=site,
+                url=post_info['link'],
+                content=json.dumps(post_info)
+            )
+            post.save()
 
         # print(f'payload : {payload}')
 
-        req = requests.request('POST', API_URL, headers=headers_api, data=payload)
-        if 200 <= req.status_code < 300:
-            return True
-        else:
-            logger.error(f'API status code : {req.status_code}, err_msg : {req.text}')
-            return False
+        # req = requests.request('POST', API_ENDPOINT, headers=headers_api, data=payload)
+        # if 200 <= req.status_code < 300:
+        #     if post:
+        #         post.is_sent = True
+        #         post.save()
+        #     return True
+        # else:
+        #     logger.error(f'API status code : {req.status_code}, err_msg : {req.text}')
+        #     return False
     except Exception as e:
         err = f'error sending post info : {e}'
         logger.error(err)
@@ -98,18 +119,22 @@ def daryo_parser(beat: bool=False, link: str=None) -> None:
     if beat:
         last_date = get_last_date('daryo')
         new_links = daryouz.collect_new_links(last_date)
-        for link in new_links:
-            daryo_parser.apply(
-                kwargs={
-                    'link': link
-                    }
-                )
-            time.sleep(choice(seconds))
+        print(f'new_links : {new_links}')
+        # for link in new_links:
+        #     daryo_parser.apply(
+        #         kwargs={
+        #             'link': link
+        #             }
+        #         )
+        #     time.sleep(choice(seconds))
     elif link:
         try:
+            failed = False
             post_info = daryouz.get_post_detail(link)
+            if post_info.get('errors'):
+                failed = True
             post_info['link'] = link
-            send_post_info(post_info)
+            send_post_info(post_info, NewsLinks.Sites.DARYO, failed=failed)
         except Exception as e:
             logger.error(e)
     else:
