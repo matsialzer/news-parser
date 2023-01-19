@@ -13,7 +13,7 @@ logger.setLevel('INFO')
 
 encoder_utf_8 = lambda x: parse.unquote(x, encoding='utf-8')
 
-LAST_NEWS_PAGE = 'https://daryo.uz/yangiliklar'
+LAST_NEWS_PAGE = 'https://daryo.uz/yangiliklar?per-page=50'
 PAGINATION_URL = 'https://daryo.uz/yangiliklar?page={}'
 BASE_URL = 'https://daryo.uz'
 
@@ -112,10 +112,9 @@ def extract_dates(url: str) -> List[int]:
     return date_tuple
 
 
-def collect_new_links(last_date: datetime) -> List[str]:
+def collect_new_links(last_date: datetime=None) -> List[str]:
     req = requests.get(LAST_NEWS_PAGE)
     links = []
-    print(req.status_code)
     if 200 <= req.status_code < 300:
         soup = BeautifulSoup(req.content, 'html.parser')
         main_content = soup.find('main', class_='maincontent')
@@ -168,18 +167,23 @@ def collect_new_links(last_date: datetime) -> List[str]:
                                 _date.append(int(minute))
 
                         date_time = datetime(*_date)
-                        if date_time > last_date:
-                            if url not in links:
-                                links.append(url)
-                            if not new_last_date:
-                                new_last_date = date_time
-                            load_more = True
-                        else:
-                            load_more = False
-                            flag = False
-                            break
+                        yield (url, date_time)
+                        # print(date_time)
+                        # print(last_date)
+                        # if date_time > last_date:
+                        #     if url not in links:
+                        #         links.append(url)
+                        #     if not new_last_date:
+                        #         new_last_date = date_time
+                        #     load_more = True
+                        # else:
+                        #     load_more = False
+                        #     flag = False
+                        #     break
                     except Exception as e:
+                        print(e)
                         logger.error(e)
+                break
         if new_last_date:
             save_last_date('daryo', new_last_date.timestamp())
 

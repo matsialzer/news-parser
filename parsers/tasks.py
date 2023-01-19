@@ -3,6 +3,7 @@ from parsers.scrapers import (
     goal24uz, kunuz, olamsport, qalampiruz, sportsuz, 
     sputniknews, stadionuz, uzauz, zaminuz, bbc
 )
+from django.utils.timezone import make_aware
 from parsers.models import NewsLinks
 from django.conf import settings
 from datetime import datetime, date
@@ -15,8 +16,10 @@ import json
 import time
 import os
 
+
 logger = logging.getLogger('parsers')
 logger.setLevel('INFO')
+
 API_ENDPOINT = settings.API_ENDPOINT
 API_KEY = settings.API_KEY
 
@@ -63,7 +66,7 @@ def get_last_link(site: NewsLinks.Sites.choices) -> NewsLinks:
     return False
 
 
-def send_post_info(post_info: dict, site: NewsLinks.Sites=None, failed: bool=False) -> bool:
+def send_post_info(post_info: dict, post: NewsLinks) -> bool:
     try:
         image = None
         if post_info.get('main_image'):
@@ -80,130 +83,184 @@ def send_post_info(post_info: dict, site: NewsLinks.Sites=None, failed: bool=Fal
         }
         for ind, tag in enumerate(post_info.get('tags', [])):
             payload[f'tags[{ind}]'] = tag['name']
-        post = None
-        if site:
-            if failed:
-                post = NewsLinks(
-                    site=site,
-                    url=post_info['link'],
-                    err_msg=post_info['errors']
-                )
+
+        post.payload=json.dumps(payload)
+        post.save()
+        if settings.SEND_TO_API:
+            req = requests.request('POST', API_ENDPOINT, headers=headers_api, data=payload)
+            if 200 <= req.status_code < 300:
+                if post:
+                    post.is_sent = True
+                    post.save()
+                return True
+            else:
+                api_error = f'API status code : {req.status_code}, err_msg : {req.text}'
+                logger.error(api_error)
+                post.err_msg = api_error
                 post.save()
-                return
-            post = NewsLinks(
-                site=site,
-                url=post_info['link'],
-                content=json.dumps(post_info)
-            )
-            post.save()
-
-        # print(f'payload : {payload}')
-
-        # req = requests.request('POST', API_ENDPOINT, headers=headers_api, data=payload)
-        # if 200 <= req.status_code < 300:
-        #     if post:
-        #         post.is_sent = True
-        #         post.save()
-        #     return True
-        # else:
-        #     logger.error(f'API status code : {req.status_code}, err_msg : {req.text}')
-        #     return False
+                return False
     except Exception as e:
         err = f'error sending post info : {e}'
         logger.error(err)
+        post.err_msg = err
+        post.save()
     return True
 
 
-@app.task # 100% Completed
+@app.task # 100% Completed (integrated into the database)
 def daryo_parser(beat: bool=False, link: str=None) -> None:
     if beat:
-        last_date = get_last_date('daryo')
-        new_links = daryouz.collect_new_links(last_date)
-        print(f'new_links : {new_links}')
-        # for link in new_links:
-        #     daryo_parser.apply(
-        #         kwargs={
-        #             'link': link
-        #             }
-        #         )
-        #     time.sleep(choice(seconds))
+        link_objs = []
+        for link, date_time in daryouz.collect_new_links():
+            new_post, created = NewsLinks.objects.get_or_create(
+                url=link,
+                defaults={
+                    'published_at': make_aware(date_time),
+                    'site': NewsLinks.Sites.DARYO
+                }
+            )
+            if not created:
+                break
+            link_objs.append(new_post)
+        for link_obj in link_objs:
+            daryo_parser.apply(
+                kwargs={
+                    'link': link_obj.url
+                }
+            )
+            time.sleep(choice(seconds))
     elif link:
         try:
-            failed = False
+            post = NewsLinks.objects.get(url=link)
             post_info = daryouz.get_post_detail(link)
             if post_info.get('errors'):
-                failed = True
+                post.err_msg=post_info['errors']
+                post.save()
+                return
+            post.content=json.dumps(post_info)
+            post.save()
             post_info['link'] = link
-            send_post_info(post_info, NewsLinks.Sites.DARYO, failed=failed)
+            send_post_info(post_info, post)
         except Exception as e:
             logger.error(e)
     else:
         return False
 
 
-@app.task # 100% Completed
+@app.task # 100% Completed (integrated into the database)
 def gazeta_parser(beat: bool=False, link: str=None) -> None:
     if beat:
-        last_date = get_last_date('gazeta')
-        new_links = gazetauz.collect_new_links(last_date)
-        for link in new_links:
+        link_objs = []
+        for link, date_time in gazetauz.collect_new_links():
+            new_post, created = NewsLinks.objects.get_or_create(
+                url=link,
+                defaults={
+                    'published_at': make_aware(date_time),
+                    'site': NewsLinks.Sites.GAZETA
+                }
+            )
+            if not created:
+                break
+            link_objs.append(new_post)
+        for link_obj in link_objs:
             gazeta_parser.apply(
                 kwargs={
-                    'link': link
-                    }
-                )
+                    'link': link_obj.url
+                }
+            )
             time.sleep(choice(seconds))
     elif link:
         try:
+            post = NewsLinks.objects.get(url=link)
             post_info = gazetauz.get_post_detail(link)
+            if post_info.get('errors'):
+                post.err_msg=post_info['errors']
+                post.save()
+                return
+            post.content=json.dumps(post_info)
+            post.save()
             post_info['link'] = link
-            send_post_info(post_info)
+            send_post_info(post_info, post)
         except Exception as e:
             logger.error(e)
     else:
         return False
 
 
-@app.task # 100% Completed
+@app.task # 100% Completed (integrated into the database)
 def kun_parser(beat: bool=False, link: str=None) -> None:
     if beat:
-        last_date = get_last_date('kun')
-        new_links = kunuz.collect_new_links(last_date)
-        for link in new_links:
+        link_objs = []
+        for link, date_time in kunuz.collect_new_links():
+            new_post, created = NewsLinks.objects.get_or_create(
+                url=link,
+                defaults={
+                    'published_at': make_aware(date_time),
+                    'site': NewsLinks.Sites.KUN
+                }
+            )
+            if not created:
+                break
+            link_objs.append(new_post)
+        for link_obj in link_objs:
             kun_parser.apply(
                 kwargs={
-                    'link': link
-                    }
-                )
+                    'link': link_obj.url
+                }
+            )
             time.sleep(choice(seconds))
     elif link:
         try:
+            post = NewsLinks.objects.get(url=link)
             post_info = kunuz.get_post_detail(link)
+            if post_info.get('errors'):
+                post.err_msg=post_info['errors']
+                post.save()
+                return
+            post.content=json.dumps(post_info)
+            post.save()
             post_info['link'] = link
-            send_post_info(post_info)
+            send_post_info(post_info, post)
         except Exception as e:
             logger.error(e)
     else:
         return False
 
 
-@app.task # 100% Completed
+@app.task # 100% Completed (integrated into the database)
 def qalampir_parser(beat: bool=False, link: str=None) -> None:
     if beat:
-        last_date = get_last_date('qalampir')
-        new_links = qalampiruz.collect_new_links(last_date)
-        for link in new_links:
+        link_objs = []
+        for link, date_time in qalampiruz.collect_new_links():
+            new_post, created = NewsLinks.objects.get_or_create(
+                url=link,
+                defaults={
+                    'published_at': make_aware(date_time),
+                    'site': NewsLinks.Sites.QALAMPIR
+                }
+            )
+            if not created:
+                break
+            link_objs.append(new_post)
+        for link_obj in link_objs:
             qalampir_parser.apply(
                 kwargs={
-                    'link': link
-                    }
-                )
-            time.sleep(choice(seconds))  
+                    'link': link_obj.url
+                }
+            )
+            time.sleep(choice(seconds))
     elif link:
         try:
+            post = NewsLinks.objects.get(url=link)
             post_info = qalampiruz.get_post_detail(link)
+            if post_info.get('errors'):
+                post.err_msg=post_info['errors']
+                post.save()
+                return
+            post.content=json.dumps(post_info)
+            post.save()
             post_info['link'] = link
-            send_post_info(post_info)
+            send_post_info(post_info, post)
         except Exception as e:
             logger.error(e)
     else:
