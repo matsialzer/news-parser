@@ -75,8 +75,10 @@ def write_new_date(site, datetuple, link=None):
 # link = 'https://www.bbc.com/uzbek/world-60899262'
 # link = 'https://kun.uz/news/2022/12/26/bolalar-ombudsmani-samarqanddagi-dok-1maks-preparati-bilan-bogliq-holatni-organdi'
 # link = 'https://kun.uz/news/2022/12/27/18-bolani-oldirgan-beparvolik-davlat-retsepsiz-dori-savdosini-darhol-toxtatishi-kerak'
-link = 'https://daryo.uz/2023/01/18/andijonda-kop-qavatli-uyda-yongin-chiqdi'
-daryo_parser.apply_async(args=(False, link))
+# link = 'https://daryo.uz/2023/01/18/andijonda-kop-qavatli-uyda-yongin-chiqdi'
+# link = 'https://zamin.uz/uz/jamiyat/111688-angren-prokurori-maktab-hududi-qordan-tozalanmagani-haqida-tarqalgan-videosi-boyicha-izoh-berdi.html'
+# zamin_parser.apply_async(args=(False, link))
+# zamin_parser.apply_async(args=(True,))
 
 
 # kun_parser.apply_async(args=(False, link))

@@ -62,6 +62,14 @@ def get_post_detail(link: str) -> dict:
             except:
                 pass
         post_info['video'] = video
+
+        if not post_info.get('main_image'):
+            yt_img_base_url = "https://img.youtube.com/vi/{}/maxresdefault.jpg"
+            if post_info.get('video'):
+                if "youtube.com" in post_info['video']:
+                    yt_video_id = post_info['video'].split('/')[-1]
+                    yt_image = yt_img_base_url.format(yt_video_id)
+                    post_info['main_image'] = yt_image
         # // ----  video  ----
 
         # ----  texts & summary & images  ---- //
@@ -164,6 +172,7 @@ def collect_new_links(last_date: datetime=None) -> List[str]:
             else:
                 # news_blocks = _news_layout.find_all('a', class_='ss_item item flex_row')
                 news_blocks = _news_layout.find_all('div', class_='col-lg-4 col-md-6')
+                # print(f'news blocks : {len(news_blocks)}')
             if not news_blocks:
                 load_more = False
                 flag = False
@@ -173,34 +182,35 @@ def collect_new_links(last_date: datetime=None) -> List[str]:
                     a_tag = news_block.find('a', class_='news-card')
                     url = encoder_utf_8(BASE_URL+a_tag['href'])
                     # date_block = news_block.find('span', class_='date_view flex_row')
-                    time_block = news_block.find('span', class_='date')
+                    # time_block = news_block.find('span', class_='date')
                     # time_block = date_block.find_all('span')[0]
 
-                    date_list = time_block.text.split()
-                    if len(date_list) == 1:
-                        _date: list = list(datetime.today().timetuple()[0:3])
-                    elif len(date_list) == 3:
-                        _date: list = [datetime.today().year, months[date_list[1].lower()], int(date_list[0])]
-                    elif len(date_list) == 4:
-                        _date: list = [int(date_list[2]), months[date_list[1].lower()], int(date_list[0])]
-                    else:
-                        flag = False
-                        load_more = False
-                        logger.error(f'date time parsing error : {date_list}')
+                    # date_list = time_block.text.split()
+                    # if len(date_list) == 1:
+                    #     _date: list = list(datetime.today().timetuple()[0:3])
+                    # elif len(date_list) == 3:
+                    #     _date: list = [datetime.today().year, months[date_list[1].lower()], int(date_list[0])]
+                    # elif len(date_list) == 4:
+                    #     _date: list = [int(date_list[2]), months[date_list[1].lower()], int(date_list[0])]
+                    # else:
+                    #     flag = False
+                    #     load_more = False
+                    #     logger.error(f'date time parsing error : {date_list}')
 
-                    date_str = time_block.text.strip()
-                    time_regex = '([\d]{2}):([\d]{2})'
-                    _res_time = re.search(time_regex, date_str).groups()
+                    # date_str = time_block.text.strip()
+                    # print(date_str)
+                    # time_regex = '([\d]{2}):([\d]{2})'
+                    # _res_time = re.search(time_regex, date_str).groups()
                     
-                    if len(_res_time) == 2:
-                        is_digits = all([i.isdigit() for i in _res_time])
-                        if is_digits:
-                            hour, minute = _res_time
-                            _date.append(int(hour))
-                            _date.append(int(minute))
+                    # if len(_res_time) == 2:
+                    #     is_digits = all([i.isdigit() for i in _res_time])
+                    #     if is_digits:
+                    #         hour, minute = _res_time
+                    #         _date.append(int(hour))
+                    #         _date.append(int(minute))
 
-                    date_time = datetime(*_date)
-                    yield (url, date_time)
+                    # date_time = datetime(*_date)
+                    yield (url)
                     # if date_time > last_date:
                     #     if url not in links:
                     #         links.append(url)
@@ -213,6 +223,7 @@ def collect_new_links(last_date: datetime=None) -> List[str]:
                     #     break
                 except Exception as e:
                     logger.error(e)
+                    print(e)
             break
         if new_last_date:
             save_last_date('qalampir', new_last_date.timestamp())

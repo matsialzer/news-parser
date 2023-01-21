@@ -27,7 +27,7 @@ headers_api = {
     'api-key': API_KEY
 }
 
-seconds = [0.5, 0.6, 0.7, 0.8, 0.9, 1]
+seconds = [0.5, 0.6, 0.7, 0.8, 0.9]
 
 def get_last_date(site: str) -> datetime:
     path = f"{settings.BASE_DIR}/parsers/scrapers/data/{site}.txt"
@@ -231,11 +231,10 @@ def kun_parser(beat: bool=False, link: str=None) -> None:
 def qalampir_parser(beat: bool=False, link: str=None) -> None:
     if beat:
         link_objs = []
-        for link, date_time in qalampiruz.collect_new_links():
+        for link in qalampiruz.collect_new_links():
             new_post, created = NewsLinks.objects.get_or_create(
                 url=link,
                 defaults={
-                    'published_at': make_aware(date_time),
                     'site': NewsLinks.Sites.QALAMPIR
                 }
             )
@@ -267,47 +266,80 @@ def qalampir_parser(beat: bool=False, link: str=None) -> None:
         return False
 
 
-@app.task # 100% Completed
+@app.task # 100% Completed (integrated into the database)
 def uza_parser(beat: bool=False, link: str=None) -> None:
     if beat:
-        last_date = get_last_date('uza')
-        new_links = uzauz.collect_new_links(last_date)
-        for link in new_links:
+        link_objs = []
+        for link, date_time in uzauz.collect_new_links():
+            new_post, created = NewsLinks.objects.get_or_create(
+                url=link,
+                defaults={
+                    'published_at': make_aware(date_time),
+                    'site': NewsLinks.Sites.UZA
+                }
+            )
+            if not created: 
+                break
+            link_objs.append(new_post)
+        for link_obj in link_objs:
             uza_parser.apply(
                 kwargs={
-                    'link': link
-                    }
-                )
+                    'link': link_obj.url
+                }
+            )
             time.sleep(choice(seconds))
     elif link:
         try:
+            post = NewsLinks.objects.get(url=link)
             post_info = uzauz.get_post_detail(link)
+            if post_info.get('errors'):
+                post.err_msg=post_info['errors']
+                post.save()
+                return
+            post.content=json.dumps(post_info)
+            post.save()
             post_info['link'] = link
-            send_post_info(post_info)
+            send_post_info(post_info, post)
         except Exception as e:
-            print(f'error uza parser : {e}')
             logger.error(e)
     else:
         return False
 
 
-@app.task # 100% Completed
+@app.task # 100% Completed (integrated into the database)
 def zamin_parser(beat: bool=False, link: str=None) -> None:
     if beat:
-        last_date = get_last_date('zamin')
-        new_links = zaminuz.collect_new_links(last_date)
-        for link in new_links:
+        link_objs = []
+        for link, date_time in zaminuz.collect_new_links():
+            new_post, created = NewsLinks.objects.get_or_create(
+                url=link,
+                defaults={
+                    'published_at': make_aware(date_time),
+                    'site': NewsLinks.Sites.ZAMIN
+                }
+            )
+            if not created: 
+                break
+            link_objs.append(new_post)
+        for link_obj in link_objs:
             zamin_parser.apply(
                 kwargs={
-                    'link': link
-                    }
-                )
+                    'link': link_obj.url
+                }
+            )
             time.sleep(choice(seconds))
     elif link:
         try:
+            post = NewsLinks.objects.get(url=link)
             post_info = zaminuz.get_post_detail(link)
+            if post_info.get('errors'):
+                post.err_msg=post_info['errors']
+                post.save()
+                return
+            post.content=json.dumps(post_info)
+            post.save()
             post_info['link'] = link
-            send_post_info(post_info)
+            send_post_info(post_info, post)
         except Exception as e:
             logger.error(e)
     else:
