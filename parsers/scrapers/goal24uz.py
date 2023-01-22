@@ -14,53 +14,54 @@ BASE_URL = "https://goal24.uz/"
 
 def get_post_detail(link: str) -> dict:
     post_info: dict = {}
+    try:
+        req = requests.get(link)
+        soup = BeautifulSoup(req.text, 'html.parser')
 
-    req = requests.get(link)
-    soup = BeautifulSoup(req.text, 'html.parser')
+        # ----  title  ---- //
+        title = soup.find("h1", class_="post-title")
+        post_info["title"] = title.find("span").text
+        # // ----  title  ----
 
-    # ----  title  ---- //
-    title = soup.find("h1", class_="post-title")
-    post_info["title"] = title.find("span").text
-    # // ----  title  ----
+        # ----  main image  ---- //
+        main_image = None
+        main_img_div = soup.find("div", class_="fstory")
+        if main_img_div:
+            main_image = main_img_div.find("img")["src"]
+        post_info['main_image'] = f"{BASE_URL}{main_image}"
+        # // ----  main image  ----
 
-    # ----  main image  ---- //
-    main_image = None
-    main_img_div = soup.find("div", class_="fstory")
-    if main_img_div:
-        main_image = main_img_div.find("img")["src"]
-    post_info['main_image'] = f"{BASE_URL}{main_image}"
-    # // ----  main image  ----
+        # ----  texts & images  ---- //
+        _news_body = soup.find("div", class_="fstory")
 
-    # ----  texts & images  ---- //
-    _news_body = soup.find("div", class_="fstory")
+        _all_texts: object = _news_body
+        _all_images = _news_body.find_all("img")[1:]
 
-    _all_texts: object = _news_body
-    _all_images = _news_body.find_all("img")[1:]
+        text: str = ""
+        images = []
+        if _all_texts:
+            for p in _all_texts.strings:
+                text += p.strip()
 
-    text: str = ""
-    images = []
-    if _all_texts:
-        for p in _all_texts.strings:
-            text += p.strip()
+        if _all_images:
+            for image in _all_images:
+                if image['data-src'].startswith("https://"):
+                    images.append(image["data-src"])
+                else:
+                    images.append(f'{BASE_URL}{image["data-src"]}')
+        post_info['text'] = text
+        post_info['images'] = images
+        # // ----  texts & images  ----
 
-    if _all_images:
-        for image in _all_images:
-            if image['data-src'].startswith("https://"):
-                images.append(image["data-src"])
-            else:
-                images.append(f'{BASE_URL}{image["data-src"]}')
-    post_info['text'] = text
-    post_info['images'] = images
-    # // ----  texts & images  ----
-
-    # ---- videos ---- //
-    videos = []
-    _all_videos = _news_body.find_all("iframe")
-    if _all_videos:
-        for video in _all_videos:
-            videos.append(video["src"])
-    post_info["videos"] = videos
-
+        # ---- videos ---- //
+        videos = []
+        _all_videos = _news_body.find_all("iframe")
+        if _all_videos:
+            for video in _all_videos:
+                videos.append(video["src"])
+        post_info["videos"] = videos
+    except Exception as e:
+        post_info['errors'] = e
     return post_info
 
 
@@ -74,11 +75,11 @@ link = "https://goal24.uz/5358-38-yildan-beri-davom-etayotgan-koma-fransiyalik-s
 # print(result)
 
 
-def collect_new_links(last_date: datetime) -> List[str]:
+def collect_new_links(last_date: datetime=None) -> List[str]:
     new_last_date = None
     has_next_page = True
     links = []
-    for i in range(1, 3500):
+    for i in range(1, 3):
         if not has_next_page:
             break
         req = requests.get(f'https://goal24.uz/lastnews/page/{i}/')
@@ -100,13 +101,14 @@ def collect_new_links(last_date: datetime) -> List[str]:
                     time = date.split(',')[1]
                     date = day + ' ' + time
                 date_in_datatime = datetime.strptime(date, '%d-%m-%Y %H:%M')
-                if date_in_datatime > last_date:
-                    links.append(link)
-                    if not new_last_date:
-                        new_last_date = last_date
-                else:
-                    has_next_page = False
-                    break
+                yield (link, date_in_datatime)
+                # if date_in_datatime > last_date:
+                #     links.append(link)
+                #     if not new_last_date:
+                #         new_last_date = last_date
+                # else:
+                #     has_next_page = False
+                #     break
 
     if new_last_date:
         save_last_date('goal24', new_last_date.timestamp())

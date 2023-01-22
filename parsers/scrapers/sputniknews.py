@@ -27,104 +27,106 @@ headers = {
 
 
 def get_post_detail(link: str) -> dict:
-    post_info: dict = {}
-
-    req = session.get(link, headers=headers)
-    soup = BeautifulSoup(req.text, 'html.parser')
-
-    # ----  title  ---- //
-    title = soup.find('h1', class_='article__title')
-    post_info['title'] = title.text
-    # // ----  title  ----
-
-    # ----  summary  ---- //
-    summary = None
     try:
-        _summary = soup.find('div', class_="article__announce-text")
-        if _summary:
-            summary = _summary.text
-    except:
-        pass
-    post_info['summary'] = summary
-    # // ----  summary  ----
+        post_info: dict = {}
 
-    # ---- main image ---- //
-    main_img = None
-    main_img_div = soup.find("div", class_="media__size")
-    if main_img_div:
-        _main_image = main_img_div.find('img')
-        if _main_image:
-            try:
-                main_img = encoder_utf_8(_main_image['src'])
-            except:
-                pass
-    post_info['main_image'] = main_img
-    # // ----  main image  ----
+        req = session.get(link, headers=headers)
+        soup = BeautifulSoup(req.text, 'html.parser')
 
-    # ---- main video ---- // TODO
-    main_video = None
-    main_video_div = soup.find("div", class_="media__size")
-    if main_video_div:
-        _main_video = main_img_div.find('iframe')
-        if _main_video:
-            try:
-                main_video = encoder_utf_8(_main_video['src'])
-            except:
-                pass
-    post_info['main_video'] = main_video
-    # // ----  main video  ----
+        # ----  title  ---- //
+        title = soup.find('h1', class_='article__title')
+        post_info['title'] = title.text
+        # // ----  title  ----
 
-    body_div = soup.find("div", class_="article__body")
+        # ----  summary  ---- //
+        summary = None
+        try:
+            _summary = soup.find('div', class_="article__announce-text")
+            if _summary:
+                summary = _summary.text
+        except:
+            pass
+        post_info['summary'] = summary
+        # // ----  summary  ----
 
-    # ---- texts & images ---- //
-    _all_p = body_div.find_all("div", class_="article__block")
-    image_items = soup.find_all("div", class_="article__photo-item")
-    images = []
-    text = ""
-    if image_items:
-        for image in image_items:
-            img = image.find("img")
-            if img:
-                images.append(encoder_utf_8(img['src']))
-    else:
-        for p in _all_p:
-            img = p.find('img')
-            if img:
+        # ---- main image ---- //
+        main_img = None
+        main_img_div = soup.find("div", class_="media__size")
+        if main_img_div:
+            _main_image = main_img_div.find('img')
+            if _main_image:
                 try:
-                    images.append(encoder_utf_8(img['src']))
+                    main_img = encoder_utf_8(_main_image['src'])
                 except:
                     pass
-            text += p.text + '\n'
-    post_info['text'] = text
-    post_info['images'] = images
+        post_info['main_image'] = main_img
+        # // ----  main image  ----
 
-    # // ----  texts & images  ----
+        # ---- main video ---- // TODO
+        main_video = None
+        main_video_div = soup.find("div", class_="media__size")
+        if main_video_div:
+            _main_video = main_img_div.find('iframe')
+            if _main_video:
+                try:
+                    main_video = encoder_utf_8(_main_video['src'])
+                except:
+                    pass
+        post_info['main_video'] = main_video
+        # // ----  main video  ----
 
-    # ----  video  ---- // TODO
-    video_div = body_div.find("")
-    print("video_div", video_div)
-    video = None
-    # if video_div:
-    #     for _video in video_div:
-    #         _iframe = _video.find("iframe")
-    #         if _iframe:
-    #             video = encoder_utf_8(_iframe['src'])
-    # post_info['video'] = video
-    # // ----  video  ----
+        body_div = soup.find("div", class_="article__body")
 
-    # ----  tags  ---- //
-    _tags = soup.find_all('a', class_='tag__text')
-    if _tags:
-        tags = [
-            {
-                'name': tag.text,
-                'url': BASE_URL + encoder_utf_8(tag['href'])
-            }
-            for tag in _tags
-        ]
-        post_info['tags'] = tags
-    # // ----  tags  ----
+        # ---- texts & images ---- //
+        _all_p = body_div.find_all("div", class_="article__block")
+        image_items = soup.find_all("div", class_="article__photo-item")
+        images = []
+        text = ""
+        if image_items:
+            for image in image_items:
+                img = image.find("img")
+                if img:
+                    images.append(encoder_utf_8(img['src']))
+        else:
+            for p in _all_p:
+                img = p.find('img')
+                if img:
+                    try:
+                        images.append(encoder_utf_8(img['src']))
+                    except:
+                        pass
+                text += p.text + '\n'
+        post_info['text'] = text
+        post_info['images'] = images
 
+        # // ----  texts & images  ----
+
+        # ----  video  ---- // TODO
+        # video_div = body_div.find("")
+        # print("video_div", video_div)
+        # video = None
+        # if video_div:
+        #     for _video in video_div:
+        #         _iframe = _video.find("iframe")
+        #         if _iframe:
+        #             video = encoder_utf_8(_iframe['src'])
+        # post_info['video'] = video
+        # // ----  video  ----
+
+        # ----  tags  ---- //
+        _tags = soup.find_all('a', class_='tag__text')
+        if _tags:
+            tags = [
+                {
+                    'name': tag.text,
+                    'url': BASE_URL + encoder_utf_8(tag['href'])
+                }
+                for tag in _tags
+            ]
+            post_info['tags'] = tags
+        # // ----  tags  ----
+    except Exception as e:
+        post_info['errors'] = e
     return post_info
 
 
@@ -145,7 +147,7 @@ link = "https://sputniknews-uz.com/20221219/uqk-donetskdagi-kasalxonani-oqqa-tut
 
 
 
-def collect_new_links(last_date: datetime) -> List[str]:
+def collect_new_links(last_date: datetime=None) -> List[str]:
     new_last_date = None
     has_next_page = True
     links = []
@@ -164,7 +166,7 @@ def collect_new_links(last_date: datetime) -> List[str]:
         'Декабр': '12'
     }
 
-    for i in range(1, 2700):
+    for i in range(1, 3):
         req = requests.get(f'https://sputniknews-uz.com/archive/?page={i}')
         if not has_next_page:
             break
@@ -199,16 +201,18 @@ def collect_new_links(last_date: datetime) -> List[str]:
                         date = day + '-' + month + '-' + year + ' ' + time
                         date = datetime.strptime(date, '%d-%m-%Y %H:%M')     
                     date_in_datatime = datetime.strptime(date, '%d-%m-%Y %H:%M')
-                    if date_in_datatime > last_date:
-                        if link not in links:
-                            links.append(link)
-                        if not new_last_date:
-                            new_last_date = date_in_datatime
-                    else:
-                        has_next_page = False
-                        break
+                    yield (link, date_in_datatime)
+                    # if date_in_datatime > last_date:
+                    #     if link not in links:
+                    #         links.append(link)
+                    #     if not new_last_date:
+                    #         new_last_date = date_in_datatime
+                    # else:
+                    #     has_next_page = False
+                    #     break
                 except Exception as e:
                     logger.error(f'error in sputnik link collector: {e}')
+                
     if new_last_date:
         save_last_date('sputniknews', new_last_date.timestamp()) 
     return links

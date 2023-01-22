@@ -105,7 +105,8 @@ def get_post_detail(link: str) -> dict:
             main_video = encoder_utf_8(video_div['href'])
         post_info["main_video"] = main_video
     except Exception as e:
-        print(f'error in olamsport parser : {e}')
+        # print(f'error in olamsport parser : {e}')
+        post_info['errors'] = e
     return post_info
 
 
@@ -137,7 +138,7 @@ months = {
 }
 
 
-def collect_new_links(last_date: datetime) -> List[str]:
+def collect_new_links(last_date: datetime=None) -> List[str]:
     req = session.get(LAST_NEW_PAGE, headers=headers)
     error_counter = 0
     links = []
@@ -190,18 +191,19 @@ def collect_new_links(last_date: datetime) -> List[str]:
                             hour, minute = _res_time
                             _date.append(int(hour))
                             _date.append(int(minute))
-                        print(f"------{_date}")
+                        # print(f"------{_date}")
                     date_time = datetime(*_date)
-                    if date_time > last_date:
-                        if url not in links:
-                            links.append(url)
-                        if not new_last_date:
-                            new_last_date = date_time
-                        load_more = True
-                    else:
-                        load_more = False
-                        flag = False
-                        break
+                    yield (url, date_time)
+                    # if date_time > last_date:
+                    #     if url not in links:
+                    #         links.append(url)
+                    #     if not new_last_date:
+                    #         new_last_date = date_time
+                    #     load_more = True
+                    # else:
+                    #     load_more = False
+                    #     flag = False
+                    #     break
                 except Exception as e:
                     print(f"error in olamsport collector : {e}")
                     error_counter += 1
@@ -210,7 +212,7 @@ def collect_new_links(last_date: datetime) -> List[str]:
                         load_more = False
                         break
                     logger.error(e)
-
+            break
         if new_last_date:
             save_last_date('olamsport', new_last_date.timestamp())
         return links

@@ -30,37 +30,38 @@ LAST_NEWS_PAGE = 'https://bugun.uz/category/yangiliklar/?_rstr_nocache=rstr68363
 BASE_URL = 'https://bugun.uz'
 
 
-def get_post_detail(link: str) -> dict:
+def get_post_detail(link: str, img_url=None) -> dict:
     post_info: dict = {}
+    try:
+        req = session.get(link, headers=headers)
+        soup = BeautifulSoup(req.text, 'html.parser')
+        post_info['main_image'] = img_url
+        # ----  title  ---- //
+        title = soup.find('div', class_='blog__header').find("h1")
 
-    req = session.get(link, headers=headers)
-    soup = BeautifulSoup(req.text, 'html.parser')
+        post_info['title'] = title.text
+        # // ----  title  ----
 
-    # ----  title  ---- //
-    title = soup.find('div', class_='blog__header').find("h1")
+        body = soup.find("div", class_="blog__body")
 
-    post_info['title'] = title.text
-    # // ----  title  ----
+        # ---- images and texts ---- //
+        images = []
+        text = ""
+        _all_p = body.find_all("p")
+        _all_figures = body.find_all("figure", class_="wp-caption")
+        if _all_p:
+            for p in _all_p:
+                text += p.text + "\n"
+        post_info["text"] = text
+        if _all_figures:
+            for _figure in _all_figures:
+                _image = _figure.find("img")
+                images.append(encoder_utf_8(_image["data-src"]))
+        post_info["images"] = images
 
-    body = soup.find("div", class_="blog__body")
-
-    # ---- images and texts ---- //
-    images = []
-    text = ""
-    _all_p = body.find_all("p")
-    _all_figures = body.find_all("figure", class_="wp-caption")
-    if _all_p:
-        for p in _all_p:
-            text += p.text + "\n"
-    post_info["text"] = text
-    if _all_figures:
-        for _figure in _all_figures:
-            _image = _figure.find("img")
-            images.append(encoder_utf_8(_image["data-src"]))
-    post_info["images"] = images
-
-    # // ---- main ----
-
+        # // ---- main ----
+    except Exception as e:
+        post_info['errors'] = e
     return post_info
 
 
@@ -73,7 +74,7 @@ link = "https://bugun.uz/2022/11/21/stadion-uzra-parvoz-qilayotgan-talisman-ulka
 # result = get_post_detail(link=link)
 # print(result)
 
-def collect_new_links(last_date: datetime) -> List[str]:
+def collect_new_links(last_date: datetime=None) -> List[str]:
     req = session.get(LAST_NEWS_PAGE, headers=headers)
     _date = []
     links = []
@@ -109,6 +110,16 @@ def collect_new_links(last_date: datetime) -> List[str]:
                 try:
                     main_link = news_block.find('a')
                     url = encoder_utf_8(main_link['href'])
+                    img_url = None
+                    img = news_block.find('img')
+                    if img:
+                        try:
+                            img_url = img['data-src']
+                        except:
+                            try:
+                                img_url = img['src']
+                            except:
+                                pass
                     date_block_div = news_block.find('div', class_='post__top')
                     date_block = date_block_div.find_all('span')[0]
 
@@ -127,17 +138,17 @@ def collect_new_links(last_date: datetime) -> List[str]:
                             _date.append(int(hour))
                             _date.append(int(minute))
                     date_time = datetime(*_date)
-
-                    if date_time > last_date:
-                        if url not in links:
-                            links.append(url)
-                        if not new_last_date:
-                            new_last_date = date_time
-                        load_more = True
-                    else:
-                        load_more = False
-                        flag = False
-                        break
+                    yield (url, date_time, img_url)
+                    # if date_time > last_date:
+                    #     if url not in links:
+                    #         links.append(url)
+                    #     if not new_last_date:
+                    #         new_last_date = date_time
+                    #     load_more = True
+                    # else:
+                    #     load_more = False
+                    #     flag = False
+                    #     break
                 except Exception as e:
                     error_counter += 1
                     if error_counter > 10:
@@ -145,7 +156,7 @@ def collect_new_links(last_date: datetime) -> List[str]:
                         load_more = False
                         break
                     logger.error(e)
-
+            break
         if new_last_date:
             save_last_date('bugunuz', new_last_date.timestamp())
     return links

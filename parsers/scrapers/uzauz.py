@@ -107,7 +107,7 @@ def collect_new_links(last_date: datetime=None) -> List[str]:
     count = 0
     links = []
     new_last_date = None
-    for i in range(1, 100):
+    for i in range(1, 3):
         if not has_next_page:
             break
         api = f'https://api.uza.uz/api/v1/posts?page={i}'
