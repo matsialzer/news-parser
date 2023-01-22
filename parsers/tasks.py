@@ -107,6 +107,28 @@ def send_post_info(post_info: dict, post: NewsLinks) -> bool:
     return True
 
 
+@app.task # task for using in action (admin.py)
+def resend_post_info(post_id: int):
+    try:
+        post = NewsLinks.objects.get(id=post_id)
+        payload = json.loads(post.payload)
+        if settings.SEND_TO_API:
+            req = requests.request('POST', API_ENDPOINT, headers=headers_api, data=payload)
+            if 200 <= req.status_code < 300:
+                if post:
+                    post.is_sent = True
+                    post.save()
+                return True
+            else:
+                api_error = f'API status code : {req.status_code}, err_msg : {req.text}'
+                logger.error(api_error)
+                post.err_msg = api_error
+                post.save()
+                return False
+    except Exception as e:
+        logger.error(e)
+
+
 @app.task # 100% Completed (integrated into the database)
 def daryo_parser(beat: bool=False, link: str=None) -> None:
     if beat:
