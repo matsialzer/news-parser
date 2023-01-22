@@ -1,5 +1,5 @@
 from django.db import models
-
+from django.utils import timezone
 
 
 class NewsLinks(models.Model):
@@ -20,8 +20,16 @@ class NewsLinks(models.Model):
         UZA = 'UZA'
         ZAMIN = 'ZAMIN'
 
-    url = models.URLField(max_length=600)
     site = models.CharField(max_length=100, choices=Sites.choices)
-    published_at = models.DateTimeField(null=True, blank=True)
+
+    url = models.URLField(max_length=600, unique=True)
+    content = models.JSONField(null=True, blank=True)
+    payload = models.JSONField(null=True, blank=True)
+
+    is_sent = models.BooleanField(default=False)
+    published_at = models.DateTimeField(default=timezone.now)
+    err_msg = models.TextField(null=True, blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
 
+    class Meta:
+        verbose_name_plural = 'News link'

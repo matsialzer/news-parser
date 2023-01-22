@@ -1,4 +1,3 @@
-import re
 from parsers.models import NewsLinks
 from bs4 import BeautifulSoup
 from datetime import datetime
@@ -6,6 +5,7 @@ from urllib import parse
 from typing import List
 import requests
 import logging
+import re
 
 logger = logging.getLogger('parsers')
 logger.setLevel('INFO')
@@ -20,87 +20,88 @@ BASE_URL = 'https://kun.uz'
 
 def get_post_detail(link: str) -> dict:
     post_info: dict = {}
+    try:
+        req = requests.get(link)
+        soup = BeautifulSoup(req.text, 'html.parser')
 
-    req = requests.get(link)
-    soup = BeautifulSoup(req.text, 'html.parser')
+        # ----  title  ---- //
+        title = soup.find('div', class_='single-header__title')
+        post_info['title'] = title.text
+        # // ----  title  ----
 
-    # ----  title  ---- //
-    title = soup.find('div', class_='single-header__title')
-    post_info['title'] = title.text
-    # // ----  title  ----
+        _single_content = soup.find('div', class_='single-content')
 
-    _single_content = soup.find('div', class_='single-content')
+        # ----  summary  ---- //
+        _summary = _single_content.find('h4')
+        summary = None
+        if _summary:
+            summary = _summary.text
+        post_info['summary'] = summary
+        # // ----  summary  ----
 
-    # ----  summary  ---- //
-    _summary = _single_content.find('h4')
-    summary = None
-    if _summary:
-        summary = _summary.text
-    post_info['summary'] = summary
-    # // ----  summary  ----
+        # ----  main image  ---- //
+        main_image = None
+        _main_image = _single_content.find('img')
+        if _main_image:
+            try:
+                main_image = encoder_utf_8(_main_image['src'])
+            except:
+                pass
+        post_info['main_image'] = main_image
+        # // ----  main image  ----
 
-    # ----  main image  ---- //
-    main_image = None
-    _main_image = _single_content.find('img')
-    if _main_image:
-        try:
-            main_image = encoder_utf_8(_main_image['src'])
-        except:
-            pass
-    post_info['main_image'] = main_image
-    # // ----  main image  ----
+        # ----  video  ---- //
+        _figure = _single_content.find('figure', class_='iframe')
+        video = None
+        if _figure:
+            _iframe = _figure.find('iframe')
+            if _iframe:
+                video = encoder_utf_8(_iframe['src'])
+        post_info['video'] = video
 
-    # ----  video  ---- //
-    _figure = _single_content.find('figure', class_='iframe')
-    video = None
-    if _figure:
-        _iframe = _figure.find('iframe')
-        if _iframe:
-            video = encoder_utf_8(_iframe['src'])
-    post_info['video'] = video
+        if not post_info.get('main_image'):
+            yt_img_base_url = "https://img.youtube.com/vi/{}/maxresdefault.jpg"
+            if post_info.get('video'):
+                if "youtube.com" in post_info['video']:
+                    yt_video_id = post_info['video'].split('/')[-1]
+                    yt_image = yt_img_base_url.format(yt_video_id)
+                    post_info['main_image'] = yt_image
+        # // ----  video  ----
 
-    if not post_info.get('main_image'):
-        yt_img_base_url = "https://img.youtube.com/vi/{}/maxresdefault.jpg"
-        if post_info.get('video'):
-            if "youtube.com" in post_info['video']:
-                yt_video_id = post_info['video'].split('/')[-1]
-                yt_image = yt_img_base_url.format(yt_video_id)
-                post_info['main_image'] = yt_image
-    # // ----  video  ----
+        # ----  texts & images  ---- //
 
-    # ----  texts & images  ---- //
+        images = []
+        _all_images = _single_content.find_all('img')
+        if _all_images:
+            for img in _all_images:
+                img_url = img.get('src')
+                if img_url:
+                    if img_url != main_image:
+                        images.append(encoder_utf_8(img_url))
 
-    images = []
-    _all_images = _single_content.find_all('img')
-    if _all_images:
-        for img in _all_images:
-            img_url = img.get('src')
-            if img_url:
-                if img_url != main_image:
-                    images.append(encoder_utf_8(img_url))
+        _all_p = _single_content.find_all('p')
+        text = ""
+        if _all_p:
+            for p in _all_p:
+                text += p.text + '\n'
+        post_info['text'] = text
+        post_info['images'] = images
+        # // ----  texts & images  ----
 
-    _all_p = _single_content.find_all('p')
-    text = ""
-    if _all_p:
-        for p in _all_p:
-            text += p.text + '\n'
-    post_info['text'] = text
-    post_info['images'] = images
-    # // ----  texts & images  ----
-
-    # ----  tags  ---- //
-    _tags = soup.find_all('a', class_='tags-ui__link')
-    if _tags:
-        tags = [
-            {
-                'name': tag.text,
-                'url': BASE_URL + encoder_utf_8(tag['href'])
-            }
-            for tag in _tags
-        ]
-        post_info['tags'] = tags
-    # // ----  tags  ----
-
+        # ----  tags  ---- //
+        _tags = soup.find_all('a', class_='tags-ui__link')
+        if _tags:
+            tags = [
+                {
+                    'name': tag.text,
+                    'url': BASE_URL + encoder_utf_8(tag['href'])
+                }
+                for tag in _tags
+            ]
+            post_info['tags'] = tags
+        # // ----  tags  ----
+    except Exception as e:
+        post_info['errors'] = e
     return post_info
 
 
@@ -114,7 +115,7 @@ test_link = 'https://kun.uz/uz/news/2022/12/12/ozbekistonning-energiya-inqirozi-
 # print(res)
 
 
-def collect_new_links(last_date: datetime) -> List[str]:
+def collect_new_links(last_date: datetime=None) -> List[str]:
     req = requests.get(LAST_NEWS_PAGE)
     links = []
     if 200 <= req.status_code < 300:
@@ -126,6 +127,7 @@ def collect_new_links(last_date: datetime) -> List[str]:
         while flag:
             news_blocks = None
             if load_more:
+                break
                 load_more_link = soup.find('a', class_='load-more__link')
                 req = requests.get(encoder_utf_8(BASE_URL+load_more_link['href']))
                 if 200 <= req.status_code < 300:
@@ -158,18 +160,20 @@ def collect_new_links(last_date: datetime) -> List[str]:
                             _date.append(int(minute))
 
                     date_time = datetime(*_date)
-                    if date_time > last_date:
-                        if url not in links:
-                            links.append(url)
-                        if not new_last_date:
-                            new_last_date = date_time
-                        load_more = True
-                    else:
-                        load_more = False
-                        flag = False
-                        break
+                    yield (url, date_time)
+                    # if date_time > last_date:
+                    #     if url not in links:
+                    #         links.append(url)
+                    #     if not new_last_date:
+                    #         new_last_date = date_time
+                    #     load_more = True
+                    # else:
+                    #     load_more = False
+                    #     flag = False
+                    #     break
                 except Exception as e:
                     logger.error(e)
+            break
         if new_last_date:
             save_last_date('kun', new_last_date.timestamp())
     return links

@@ -7,4 +7,3 @@ env/
 *sqlite3
 *celerybeat-schedule
 *log
-

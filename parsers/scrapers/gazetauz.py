@@ -30,80 +30,81 @@ headers = {
 
 def get_post_detail(link: str) -> dict:
     post_info: dict = {}
+    try:
+        req = session.get(link, headers=headers)
+        soup = BeautifulSoup(req.text, 'html.parser')
 
-    req = session.get(link, headers=headers)
-    soup = BeautifulSoup(req.text, 'html.parser')
+        _main_content = soup.find('div', class_='articlePage')
+        # ----  title  ---- //
+        title = _main_content.find('h1', id='article_title')
+        post_info['title'] = title.text
+        # // ----  title  ----
 
-    _main_content = soup.find('div', class_='articlePage')
-    # ----  title  ---- //
-    title = _main_content.find('h1', id='article_title')
-    post_info['title'] = title.text
-    # // ----  title  ----
+        # ----  main image & summary  ---- //
+        main_image = None
+        img_layout = _main_content.find('div', class_='articleTopBG')
+        _summary = img_layout.find("h4")
+        summary = ""
+        if img_layout:
+            _img = img_layout.find('img')
+            if _img:
+                try:
+                    main_image = encoder_utf_8(_img['data-src'])
+                except:
+                    pass
+        if _summary:
+            summary = _summary.text
 
-    # ----  main image & summary  ---- //
-    main_image = None
-    img_layout = _main_content.find('div', class_='articleTopBG')
-    _summary = img_layout.find("h4")
-    summary = ""
-    if img_layout:
-        _img = img_layout.find('img')
-        if _img:
+        post_info["summary"] = summary
+        post_info['main_image'] = main_image
+        # // ----  main image & summary  ----
+
+        _body = _main_content.find('div', class_='articleContent')
+
+        # ----  video  ---- //
+        video = None  # TODO
+        _all_p = _body.find_all("p")
+
+        for p in _all_p:
             try:
-                main_image = encoder_utf_8(_img['data-src'])
+                _iframe = p.find("iframe")
+                if _iframe:
+                    video = encoder_utf_8(_iframe['src'])
             except:
                 pass
-    if _summary:
-        summary = _summary.text
 
-    post_info["summary"] = summary
-    post_info['main_image'] = main_image
-    # // ----  main image & summary  ----
+        post_info['video'] = video
+        # // ----  video  ----
 
-    _body = _main_content.find('div', class_='articleContent')
+        # ----  texts  & images  ---- //
+        text = ""
+        images = []
+        if _body:
+            _images = _body.find_all("img", class_="fr-fic fr-dii lazy")
+            for _img in _images:
+                images.append(encoder_utf_8(_img["data-src"]))
+            for p in _body:
+                text += p.text + '\n'
 
-    # ----  video  ---- //
-    video = None  # TODO
-    _all_p = _body.find_all("p")
+        post_info['text'] = text
+        post_info['images'] = images
+        # // ----  texts & summary & images  ----
 
-    for p in _all_p:
-        try:
-            _iframe = p.find("iframe")
-            if _iframe:
-                video = encoder_utf_8(_iframe['src'])
-        except:
-            pass
-
-    post_info['video'] = video
-    # // ----  video  ----
-
-    # ----  texts  & images  ---- //
-    text = ""
-    images = []
-    if _body:
-        _images = _body.find_all("img", class_="fr-fic fr-dii lazy")
-        for _img in _images:
-            images.append(encoder_utf_8(_img["data-src"]))
-        for p in _body:
-            text += p.text + '\n'
-
-    post_info['text'] = text
-    post_info['images'] = images
-    # // ----  texts & summary & images  ----
-
-    # ----  tags  ---- //
-    tags = []
-    _tags_layout = soup.find('div', class_='articleTags')
-    if _tags_layout:
-        _tags = _tags_layout.find_all('a')
-        if _tags:
-            for tag in _tags:
-                tags.append({
-                    'name': tag.text.strip(),
-                    'url': encoder_utf_8(BASE_URL + tag["href"])
-                })
-    post_info['tags'] = tags
-    # // ----  tags  ----
-
+        # ----  tags  ---- //
+        tags = []
+        _tags_layout = soup.find('div', class_='articleTags')
+        if _tags_layout:
+            _tags = _tags_layout.find_all('a')
+            if _tags:
+                for tag in _tags:
+                    tags.append({
+                        'name': tag.text.strip(),
+                        'url': encoder_utf_8(BASE_URL + tag["href"])
+                    })
+        post_info['tags'] = tags
+        # // ----  tags  ----
+    except Exception as e:
+        post_info['errors'] = e
     return post_info
 
 
@@ -117,7 +118,7 @@ test_link = "https://www.gazeta.uz/uz/2022/12/19/wc-final/"
 
 
 
-def collect_new_links(last_date: datetime) -> List[str]:
+def collect_new_links(last_date: datetime=None) -> List[str]:
     req = session.get(LAST_NEW_PAGE, headers=headers)
     links = []
     if 200 <= req.status_code < 300:
@@ -129,6 +130,7 @@ def collect_new_links(last_date: datetime) -> List[str]:
         while flag:
             news_blocks = None
             if load_more:
+                break
                 load_more_link = _news_layout.find('a', class_='next')['href']
                 req = session.get(encoder_utf_8(BASE_URL+load_more_link), headers=headers)
                 if 200<= req.status_code < 300:
@@ -162,18 +164,21 @@ def collect_new_links(last_date: datetime) -> List[str]:
                             _date.append(int(minute))
 
                     date_time = datetime(*_date)
-                    if date_time > last_date:
-                        if url not in links:
-                            links.append(url)
-                        if not new_last_date:
-                            new_last_date = date_time
-                        load_more = True
-                    else:
-                        load_more = False
-                        flag = False
-                        break
+                    yield (url, date_time)
+                    # if date_time > last_date:
+                    #     if url not in links:
+                    #         links.append(url)
+                    #     if not new_last_date:
+                    #         new_last_date = date_time
+                    #     load_more = True
+                    # else:
+                    #     load_more = False
+                    #     flag = False
+                    #     break
                 except Exception as e:
+                    print(e)
                     logger.error(e)
+            break
         if new_last_date:
             save_last_date('gazeta', new_last_date.timestamp())
     return links

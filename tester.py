@@ -15,11 +15,12 @@ from parsers.tasks import (
     kun_parser, olamsport_parser, qalampir_parser, 
     uza_parser, championat_parser, aniq_parser, 
     zamin_parser, sputniknews_parser, goal24_parser,
-    sports_parser
+    sports_parser, stadion_parser
 )
 from django.conf import settings
 from datetime import datetime, date
 from random import choice
+from parsers.models import NewsLinks
 
 seconds = [0.5, 0.6, 0.7, 0.8, 0.9, 1]
 
@@ -73,11 +74,24 @@ def write_new_date(site, datetuple, link=None):
 # link = 'https://bugun.uz/2022/12/28/samarqandda-500-ga-yaqin-oquvchisi-otmga-kirgan-oqituvchi-xtv-ustamasi-imtihonida-100-foizlik-natija-qayd-etdi/'
 # link = 'https://www.bbc.com/uzbek/world-60872788'
 # link = 'https://www.bbc.com/uzbek/world-60899262'
-link = 'https://kun.uz/news/2022/12/26/bolalar-ombudsmani-samarqanddagi-dok-1maks-preparati-bilan-bogliq-holatni-organdi'
-link = 'https://kun.uz/news/2022/12/27/18-bolani-oldirgan-beparvolik-davlat-retsepsiz-dori-savdosini-darhol-toxtatishi-kerak'
-kun_parser.apply_async(args=(False, link))
+# link = 'https://kun.uz/news/2022/12/26/bolalar-ombudsmani-samarqanddagi-dok-1maks-preparati-bilan-bogliq-holatni-organdi'
+# link = 'https://kun.uz/news/2022/12/27/18-bolani-oldirgan-beparvolik-davlat-retsepsiz-dori-savdosini-darhol-toxtatishi-kerak'
+# link = 'https://daryo.uz/2023/01/18/andijonda-kop-qavatli-uyda-yongin-chiqdi'
+# link = 'https://zamin.uz/uz/jamiyat/111688-angren-prokurori-maktab-hududi-qordan-tozalanmagani-haqida-tarqalgan-videosi-boyicha-izoh-berdi.html'
+# zamin_parser.apply_async(args=(False, link))
+# zamin_parser.apply_async(args=(True,))
+# aniq_parser.apply_async(args=(True,))
+# sputniknews_parser.apply_async(args=(True,))
+# goal24_parser.apply_async(args=(True,))
+# championat_parser.apply_async(args=(True,))
+# olamsport_parser.apply_async(args=(True,))
+# bbc_parser.apply_async(args=(True,))
 
 
+# res = NewsLinks.objects.filter(site=NewsLinks.Sites.ANIQ).count()
+# print(res)
+
+# kun_parser.apply_async(args=(False, link))
 # from bs4 import BeautifulSoup
 
 # req = requests.get(link)

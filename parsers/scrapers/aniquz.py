@@ -27,60 +27,61 @@ headers = {
 
 def get_post_detail(link: str) -> dict:
     post_info: dict = {}
+    try:
+        req = session.get(link, headers=headers)
+        soup = BeautifulSoup(req.text, 'html.parser')
 
-    req = session.get(link, headers=headers)
-    soup = BeautifulSoup(req.text, 'html.parser')
+        # ----  title  ---- //
+        title = soup.find('h1', class_='news-item_name')
+        post_info['title'] = title.text.strip()
+        # // ----  title  ----
 
-    # ----  title  ---- //
-    title = soup.find('h1', class_='news-item_name')
-    post_info['title'] = title.text.strip()
-    # // ----  title  ----
+        # ---- main image ---- //
+        main_image = None
+        main_img_div = soup.find("div", class_="news-item_img")
 
-    # ---- main image ---- //
-    main_image = None
-    main_img_div = soup.find("div", class_="news-item_img")
+        if main_img_div:
+            _main_image = main_img_div.find('img')
+            if _main_image:
+                try:
+                    main_image = f"{BASE_URL}{encoder_utf_8(_main_image['src'])}"
+                except:
+                    pass
+        post_info['main_image'] = main_image
+        # // ---- main image ----
 
-    if main_img_div:
-        _main_image = main_img_div.find('img')
-        if _main_image:
-            try:
-                main_image = f"{BASE_URL}{encoder_utf_8(_main_image['src'])}"
-            except:
-                pass
-    post_info['main_image'] = main_image
-    # // ---- main image ----
+        # ---- texts & images ---- //
+        text = ""
+        images = []
+        _all_p = soup.find("div", "news-item_text").find_all('p')
+        if _all_p:
+            for p in _all_p:
+                try:
+                    img = p.find('img')
+                    if img:
+                        images.append(encoder_utf_8(img['src']))
+                except:
+                    pass
+                text += p.text + '\n'
+        post_info['text'] = text
+        post_info['images'] = images
+        # // ----  texts & images  ----
 
-    # ---- texts & images ---- //
-    text = ""
-    images = []
-    _all_p = soup.find("div", "news-item_text").find_all('p')
-    if _all_p:
-        for p in _all_p:
-            try:
-                img = p.find('img')
-                if img:
-                    images.append(encoder_utf_8(img['src']))
-            except:
-                pass
-            text += p.text + '\n'
-    post_info['text'] = text
-    post_info['images'] = images
-    # // ----  texts & images  ----
-
-    # ----  tags  ---- //
-    tags_div = soup.find("div", class_="pull-left")
-    _tags = tags_div.find_all('a')
-    if _tags:
-        tags = [
-            {
-                'name': tag.text,
-                'url': encoder_utf_8(tag['href'])
-            }
-            for tag in _tags
-        ]
-        post_info['tags'] = tags
-    # // ----  tags  ----
-
+        # ----  tags  ---- //
+        tags_div = soup.find("div", class_="pull-left")
+        _tags = tags_div.find_all('a')
+        if _tags:
+            tags = [
+                {
+                    'name': tag.text,
+                    'url': encoder_utf_8(tag['href'])
+                }
+                for tag in _tags
+            ]
+            post_info['tags'] = tags
+        # // ----  tags  ----
+    except Exception as e:
+        post_info['errors'] = e
     return post_info
 
 
@@ -91,11 +92,11 @@ link = "https://aniq.uz/uz/yangiliklar/jch-finalidagi-maglubiyatdan-sung-fransiy
 # print(result)
 
 
-def collect_new_links(last_date: datetime) -> List[str]:
+def collect_new_links(last_date: datetime=None) -> List[str]:
     new_last_date = None
     has_next_page = True
     links = []
-    for i in range(1, 11000):
+    for i in range(1, 3):
         if not has_next_page:
             break
         req = requests.get(f'https://aniq.uz/uz/yangiliklar?page={i}')
@@ -115,13 +116,14 @@ def collect_new_links(last_date: datetime) -> List[str]:
                     time = date[1]
                     date = day + ' ' + time
                     date_in_datatime = datetime.strptime(date, '%d.%m.%Y %H:%M')
-                if date_in_datatime > last_date:
-                    links.append(link)
-                    if not new_last_date:
-                        new_last_date = date_in_datatime
-                else:
-                    has_next_page = False
-                    break
+                yield (link, date_in_datatime)
+                # if date_in_datatime > last_date:
+                #     links.append(link)
+                #     if not new_last_date:
+                #         new_last_date = date_in_datatime
+                # else:
+                #     has_next_page = False
+                #     break
 
     if new_last_date:
         save_last_date('aniq', new_last_date.timestamp())
