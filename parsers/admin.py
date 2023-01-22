@@ -7,10 +7,10 @@ class NewsLinksAdmin(admin.ModelAdmin):
     list_display = ('id', 'is_sent', 'site', 'created_at', 'published_at', 'url')
     list_filter = ('site', 'is_sent')
     search_fields = ('url',)
-
+    actions = ('resend_to_api',)
 
     @admin.action(description="resend to API")
-    def calculate_estimated_users(self, request, queryset):
+    def resend_to_api(self, request, queryset):
         sended_posts = queryset.filter(is_sent=True)
         if sended_posts.exists():
             self.message_user(request, "Faqat jo'natilmagan postlarni jo'natish mumkin.", messages.ERROR)
