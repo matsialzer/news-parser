@@ -1,2 +1,0 @@
-2022-12-29 14:56:41,156 django.request WARNING  Not Found: /favicon.ico
-2022-12-29 14:56:41,157 django.server WARNING  "GET /favicon.ico HTTP/1.1" 404 2108
