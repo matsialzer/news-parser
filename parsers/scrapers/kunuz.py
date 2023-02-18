@@ -25,7 +25,7 @@ def get_post_detail(link: str) -> dict:
         soup = BeautifulSoup(req.text, 'html.parser')
 
         # ----  title  ---- //
-        title = soup.find('div', class_='single-header__title')
+        title = soup.find('h1', class_='single-header__title')
         post_info['title'] = title.text
         # // ----  title  ----
 
