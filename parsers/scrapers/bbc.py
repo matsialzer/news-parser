@@ -8,8 +8,6 @@ from typing import List
 import requests
 import logging
 
-
-
 logger = logging.getLogger('parsers')
 logger.setLevel('INFO')
 
@@ -23,7 +21,7 @@ session.mount('https://', adapter)
 
 LAST_NEWS_PAGE = 'https://www.bbc.com/uzbek/topics/c8y949r98pgt'
 PAGINATION_URL = '?page={}'
-BASE_URL = "https://bbc.com/uzbek"
+# BASE_URL = "https://bbc.com/uzbek"
 BASE_URL = "https://www.bbc.com/uzbek/topics/c8y949r98pgt"
 headers = {
     'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_11_5) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/50.0.2661.102 Safari/537.36'}
@@ -129,13 +127,14 @@ def get_post_detail(link: str) -> dict:
 # link = "https://www.bbc.com/uzbek/world-64056269"
 # link = "https://www.bbc.com/uzbek/uzbekistan-64024872"
 link = "https://www.bbc.com/uzbek/world-64063132"
+
+
 # link = "https://www.bbc.com/uzbek/world-49934733"
 # result = get_post_detail(link=link)
 # print(result)
 
 
-
-def collect_new_links(last_info: List=None) -> List[str]:
+def collect_new_links(last_info: List = None) -> List[str]:
     # last_date, last_link = last_info
     # last_date: date = last_date.date()
     new_last_date = None
@@ -155,7 +154,8 @@ def collect_new_links(last_info: List=None) -> List[str]:
         soup = BeautifulSoup(req.content, 'html.parser')
         main_content = soup.find('ul', attrs={'data-testid': 'topic-promos'})
         if main_content:
-            news_blocks = main_content.find_all('li', class_='bbc-v8cf3q')
+            news_blocks = main_content.find_all('li', class_='bbc-t44f9r')  # class_="bbc-v8cf3q" changed
+            print("news_blocks", news_blocks)
             if news_blocks:
                 flag = True
     while flag:
@@ -219,4 +219,3 @@ def collect_new_links(last_info: List=None) -> List[str]:
     #     else:
     #         logger.critical(f'bbc last link not found : {last_link}, page link : {page_link}')
     return links
-

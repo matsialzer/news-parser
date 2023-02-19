@@ -4,7 +4,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="bd361938-9da6-4811-a49e-57c4681b5f6e" name="Changes" comment="" />
+    <list default="true" id="bd361938-9da6-4811-a49e-57c4681b5f6e" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/parsers/scrapers/bbc.py" beforeDir="false" afterPath="$PROJECT_DIR$/parsers/scrapers/bbc.py" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -75,6 +78,7 @@
       <workItem from="1676447456709" duration="12801000" />
       <workItem from="1676562933410" duration="10619000" />
       <workItem from="1676722789194" duration="7189000" />
+      <workItem from="1676731811102" duration="1728000" />
     </task>
     <servers />
   </component>
